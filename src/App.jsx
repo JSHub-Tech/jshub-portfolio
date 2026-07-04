@@ -41,7 +41,7 @@ function App() {
       {/* Simple Footer */}
       <footer className="border-t border-white/10 bg-[#121417] px-8 lg:px-24 py-16 flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center gap-3 mb-8 md:mb-0">
-             <img src="/WebsiteLogo.png" alt="JSHub Logo" className="h-8 opacity-80" />
+             <img src="/WebsiteLogo.svg" alt="JSHub Logo" className="h-8 opacity-80" />
              <span className="text-white/60 font-bold tracking-widest">| JSHub Agency</span>
           </div>
           <div className="flex gap-8 text-sm text-white/50 font-semibold tracking-wider">

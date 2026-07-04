@@ -34,7 +34,7 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 w-full flex justify-between items-center py-5 px-8 lg:px-16 border-b border-white/5 z-50 bg-[#1A1D21]/70 backdrop-blur-xl shadow-lg transition-all duration-300">
       <a href="#home" className="flex items-center gap-2 cursor-pointer transition-transform duration-300 hover:scale-105">
-        <img src="/WebsiteLogo.png" alt="JSHub Logo" className="h-8" />
+        <img src="/WebsiteLogo.svg" alt="JSHub Logo" className="h-8" />
       </a>
       <div className="hidden md:flex gap-10 text-sm font-semibold tracking-wider text-white/60">
         {navLinks.map((link) => (
