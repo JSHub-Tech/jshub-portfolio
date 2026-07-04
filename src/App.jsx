@@ -1,18 +1,21 @@
 import React from 'react';
 import Layout from './components/Layout';
 import VortexAnimation from './components/VortexAnimation';
+import Services from './components/Services';
+import FeaturedProjects from './components/FeaturedProjects';
+import Team from './components/Team';
 
 function App() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative min-h-[calc(100vh-100px)] flex flex-col lg:flex-row items-center justify-between px-8 lg:px-24">
+      <section id="home" className="relative min-h-[calc(100vh-100px)] flex flex-col lg:flex-row items-center justify-between px-8 lg:px-24">
         
         {/* Left Side: Hero Text */}
         <div className="z-10 w-full lg:w-1/2 flex flex-col justify-center mt-12 lg:mt-0">
-          <h1 className="text-5xl lg:text-7xl font-extrabold mb-6 leading-tight tracking-tight">
+          <h1 className="text-5xl lg:text-7xl font-extrabold mb-6 leading-tight tracking-tight mt-24">
             JSHUB AGENCY: <br/> CRAFTING <br/> 
-            <span className="text-white">DISTINGUISHED DIGITAL EXPERIENCES.</span>
+            <span className="bg-gradient-to-r from-white via-white/90 to-accent-cyan text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(0,229,255,0.2)]">DISTINGUISHED DIGITAL EXPERIENCES.</span>
           </h1>
           <p className="text-xl text-white/60 mb-10 max-w-lg font-light tracking-wide">
             Modern web & mobile solutions for a connected world.
@@ -32,16 +35,26 @@ function App() {
         
       </section>
       
-      {/* Services Section Placeholder */}
-      <section className="min-h-screen border-t border-white/5 px-8 lg:px-24 py-24 bg-gradient-to-b from-background-main to-[#15171a]">
-         <div className="max-w-7xl mx-auto">
-             <h2 className="text-4xl lg:text-5xl font-bold mb-16 text-center tracking-widest text-white/90">OUR SERVICES</h2>
-             {/* We will build the vertical service cards here next */}
-             <div className="text-center text-white/30 border border-dashed border-white/20 p-20 rounded-2xl glass-panel">
-                 [Services Grid will go here]
-             </div>
-         </div>
-      </section>
+      <Services />
+      <FeaturedProjects />
+      <Team />
+      
+      {/* Simple Footer */}
+      <footer className="border-t border-white/10 bg-[#121417] px-8 lg:px-24 py-16 flex flex-col md:flex-row items-center justify-between">
+          <div className="flex items-center gap-3 mb-8 md:mb-0">
+             <img src="/WebsiteLogo.png" alt="JSHub Logo" className="h-8 opacity-80" />
+             <span className="text-white/60 font-bold tracking-widest">| JSHub Agency</span>
+          </div>
+          <div className="flex gap-8 text-sm text-white/50 font-semibold tracking-wider">
+              <a href="#" className="hover:text-accent-cyan transition-colors">Home</a>
+              <a href="#" className="hover:text-accent-red transition-colors">Services</a>
+              <a href="#" className="hover:text-accent-yellow transition-colors">Portfolio</a>
+              <a href="#" className="hover:text-accent-teal transition-colors">About</a>
+          </div>
+          <div className="text-white/30 text-xs mt-8 md:mt-0 tracking-widest">
+              Copyright 2026 JSHub Agency. All rights reserved.
+          </div>
+      </footer>
     </Layout>
   )
 }
