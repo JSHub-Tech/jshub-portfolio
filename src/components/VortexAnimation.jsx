@@ -1,293 +1,301 @@
-import React, { useRef, useMemo, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Float, useTexture, Stars, MeshTransmissionMaterial, Environment } from '@react-three/drei';
-import * as THREE from 'three';
+import React from 'react';
 
-// ── Seamless infinite orbit ring with glow ───────────────────────────────────
-const OrbitRing = ({ rx, rz, tube, color, speed, rotX, rotZ, phase }) => {
-  const ref = useRef();
-  const curve = useMemo(() => {
-    const pts = Array.from({ length: 129 }, (_, i) => {
-      const a = (i / 128) * Math.PI * 2;
-      return new THREE.Vector3(Math.cos(a) * rx, Math.sin(a) * 0.18, Math.sin(a) * rz);
-    });
-    return new THREE.CatmullRomCurve3(pts, true);
-  }, [rx, rz]);
-  const geo = useMemo(() => new THREE.TubeGeometry(curve, 200, tube, 6, true), [curve, tube]);
+/* ─────────────────────────────────────────────────────────────────────────────
+   VortexAnimation — built with pure CSS 3D transforms + SVG + keyframes
+   No Three.js. No images. Everything is code.
+───────────────────────────────────────────────────────────────────────────── */
 
-  useFrame(({ clock }) => {
-    ref.current.rotation.z = clock.getElapsedTime() * speed + phase;
-  });
-
+const VortexAnimation = () => {
   return (
-    <group rotation={[rotX, 0, rotZ]}>
-      <mesh ref={ref} geometry={geo}>
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={6} toneMapped={false} transparent opacity={0.95} />
-      </mesh>
-    </group>
-  );
-};
+    <div className="relative w-[520px] h-[520px] select-none">
 
-// ── Dot that travels along an orbit infinitely ───────────────────────────────
-const TravelingDot = ({ rx, rz, color, speed, rotX, rotZ, phase }) => {
-  const ref = useRef();
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime() * speed + phase;
-    const cosT = Math.cos(t);
-    const sinT = Math.sin(t);
-    // Apply rotation manually
-    const x = cosT * rx;
-    const y = sinT * 0.18;
-    const z = sinT * rz;
-    // Apply rotX around x-axis
-    const y2 = y * Math.cos(rotX) - z * Math.sin(rotX);
-    const z2 = y * Math.sin(rotX) + z * Math.cos(rotX);
-    // Apply rotZ around z-axis  
-    const x3 = x * Math.cos(rotZ) - y2 * Math.sin(rotZ);
-    const y3 = x * Math.sin(rotZ) + y2 * Math.cos(rotZ);
-    ref.current.position.set(x3, y3, z2);
-  });
-  return (
-    <mesh ref={ref}>
-      <sphereGeometry args={[0.09, 8, 8]} />
-      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={12} toneMapped={false} />
-    </mesh>
-  );
-};
+      {/* ── CSS Keyframe styles injected inline ── */}
+      <style>{`
+        @keyframes orbit-cw  { from { transform: rotateZ(0deg);   } to { transform: rotateZ(360deg);  } }
+        @keyframes orbit-ccw { from { transform: rotateZ(0deg);   } to { transform: rotateZ(-360deg); } }
+        @keyframes float-y   { 0%,100% { transform: translateY(0px);   } 50% { transform: translateY(-14px); } }
+        @keyframes float-y2  { 0%,100% { transform: translateY(-8px);  } 50% { transform: translateY(8px);   } }
+        @keyframes float-y3  { 0%,100% { transform: translateY(6px);   } 50% { transform: translateY(-10px); } }
+        @keyframes pulse-glow { 0%,100% { opacity: 0.18; } 50% { opacity: 0.38; } }
+        @keyframes spin-slow  { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+        @keyframes dot-orbit  { from { transform: rotateZ(0deg) translateX(160px) rotateZ(0deg);   }
+                                 to   { transform: rotateZ(360deg) translateX(160px) rotateZ(-360deg); } }
+        @keyframes dot-orbit2 { from { transform: rotateZ(0deg) translateX(126px) rotateZ(0deg);   }
+                                 to   { transform: rotateZ(-360deg) translateX(126px) rotateZ(360deg); } }
+        @keyframes dot-orbit3 { from { transform: rotateZ(90deg) translateX(98px) rotateZ(-90deg);   }
+                                 to   { transform: rotateZ(450deg) translateX(98px) rotateZ(-450deg); } }
+        @keyframes cube-spin  { from { transform: rotateX(0deg) rotateY(0deg);   }
+                                 to   { transform: rotateX(360deg) rotateY(360deg); } }
+      `}</style>
 
-// ── Beautiful glass screen panel with fake UI content ────────────────────────
-const GlassPanel = ({ position, rotation, width, height, color, speed }) => {
-  const groupRef = useRef();
-  const phase = useRef(Math.random() * Math.PI * 2);
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
-    groupRef.current.position.y = position[1] + Math.sin(t * speed + phase.current) * 0.18;
-    groupRef.current.rotation.y = rotation[1] + Math.sin(t * 0.3 + phase.current) * 0.05;
-  });
+      {/* ── Soft radial glow behind everything ── */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div style={{ width: 320, height: 320, background: 'radial-gradient(ellipse, rgba(211,47,47,0.12) 0%, rgba(0,229,255,0.06) 50%, transparent 75%)', borderRadius: '50%' }} />
+      </div>
 
-  // Fake UI bars inside the panel
-  const bars = [0.6, 0.85, 0.45, 0.7, 0.55];
+      {/* ── ORBIT RINGS — SVG ellipses with CSS 3D perspective tilt ── */}
+      <div className="absolute inset-0 flex items-center justify-center" style={{ perspective: 800 }}>
 
-  return (
-    <group ref={groupRef} position={position} rotation={rotation}>
-      {/* Glass body */}
-      <mesh>
-        <boxGeometry args={[width, height, 0.04]} />
-        <MeshTransmissionMaterial
-          backside
-          samples={4}
-          thickness={0.5}
-          roughness={0.03}
-          transmission={0.96}
-          ior={1.5}
-          chromaticAberration={0.06}
-          anisotropy={0.1}
-          distortion={0.1}
-          distortionScale={0.2}
-          temporalDistortion={0.02}
-          color={color}
-          attenuationDistance={0.5}
-          attenuationColor={color}
-        />
-      </mesh>
+        {/* Ring 1 — Cyan, tilted ~68deg, slowest */}
+        <div style={{
+          position: 'absolute',
+          width: 340, height: 340,
+          transform: 'rotateX(68deg) rotateZ(0deg)',
+          animation: 'orbit-cw 14s linear infinite',
+          transformStyle: 'preserve-3d',
+        }}>
+          <div style={{
+            position: 'absolute', inset: 0, borderRadius: '50%',
+            border: '2px solid rgba(0,229,255,0.85)',
+            boxShadow: '0 0 8px 2px rgba(0,229,255,0.35), inset 0 0 8px 2px rgba(0,229,255,0.15)',
+            filter: 'blur(0.5px)',
+          }} />
+          {/* Traveling dot */}
+          <div style={{
+            position: 'absolute', top: '50%', left: '50%',
+            width: 10, height: 10, marginLeft: -5, marginTop: -5,
+            animation: 'dot-orbit 14s linear infinite',
+            borderRadius: '50%',
+            background: '#00E5FF',
+            boxShadow: '0 0 12px 4px #00E5FF',
+          }} />
+        </div>
 
-      {/* Glowing edge frame */}
-      <lineSegments>
-        <edgesGeometry args={[new THREE.BoxGeometry(width, height, 0.04)]} />
-        <lineBasicMaterial color={color} transparent opacity={0.7} />
-      </lineSegments>
+        {/* Ring 2 — Red, tilted ~72deg with rotation offset, medium speed */}
+        <div style={{
+          position: 'absolute',
+          width: 280, height: 280,
+          transform: 'rotateX(72deg) rotateY(40deg)',
+          animation: 'orbit-ccw 10s linear infinite',
+          transformStyle: 'preserve-3d',
+        }}>
+          <div style={{
+            position: 'absolute', inset: 0, borderRadius: '50%',
+            border: '2.5px solid rgba(211,47,47,0.85)',
+            boxShadow: '0 0 10px 3px rgba(211,47,47,0.4), inset 0 0 10px 2px rgba(211,47,47,0.15)',
+            filter: 'blur(0.5px)',
+          }} />
+          <div style={{
+            position: 'absolute', top: '50%', left: '50%',
+            width: 8, height: 8, marginLeft: -4, marginTop: -4,
+            animation: 'dot-orbit2 10s linear infinite',
+            borderRadius: '50%',
+            background: '#D32F2F',
+            boxShadow: '0 0 12px 4px #D32F2F',
+          }} />
+        </div>
 
-      {/* Panel header line */}
-      <mesh position={[0, height / 2 - 0.15, 0.03]}>
-        <planeGeometry args={[width - 0.1, 0.04]} />
-        <meshBasicMaterial color={color} transparent opacity={0.6} />
-      </mesh>
+        {/* Ring 3 — Yellow, tilted ~60deg, fastest */}
+        <div style={{
+          position: 'absolute',
+          width: 220, height: 220,
+          transform: 'rotateX(60deg) rotateY(-30deg)',
+          animation: 'orbit-cw 7s linear infinite',
+          transformStyle: 'preserve-3d',
+        }}>
+          <div style={{
+            position: 'absolute', inset: 0, borderRadius: '50%',
+            border: '1.5px solid rgba(217,160,27,0.8)',
+            boxShadow: '0 0 8px 2px rgba(217,160,27,0.35)',
+            filter: 'blur(0.5px)',
+          }} />
+          <div style={{
+            position: 'absolute', top: '50%', left: '50%',
+            width: 7, height: 7, marginLeft: -3.5, marginTop: -3.5,
+            animation: 'dot-orbit3 7s linear infinite',
+            borderRadius: '50%',
+            background: '#D9A01B',
+            boxShadow: '0 0 10px 3px #D9A01B',
+          }} />
+        </div>
 
-      {/* Fake content bars */}
-      {bars.map((w, i) => (
-        <mesh key={i} position={[-(width / 2 - 0.1) + (w * (width - 0.2)) / 2, height / 2 - 0.35 - i * 0.18, 0.03]}>
-          <planeGeometry args={[w * (width - 0.2), 0.055]} />
-          <meshBasicMaterial color={color} transparent opacity={0.25} />
-        </mesh>
-      ))}
+        {/* Ring 4 — Outer faint cyan */}
+        <div style={{
+          position: 'absolute',
+          width: 420, height: 420,
+          transform: 'rotateX(74deg) rotateY(15deg)',
+          animation: 'orbit-ccw 20s linear infinite',
+          transformStyle: 'preserve-3d',
+        }}>
+          <div style={{
+            position: 'absolute', inset: 0, borderRadius: '50%',
+            border: '1.5px solid rgba(0,229,255,0.3)',
+            boxShadow: '0 0 6px 1px rgba(0,229,255,0.15)',
+            filter: 'blur(1px)',
+          }} />
+        </div>
+      </div>
 
-      {/* Corner accent dots */}
-      {[[-1, 1], [1, 1], [-1, -1], [1, -1]].map(([sx, sy], i) => (
-        <mesh key={i} position={[sx * (width / 2 - 0.08), sy * (height / 2 - 0.08), 0.03]}>
-          <circleGeometry args={[0.04, 8]} />
-          <meshBasicMaterial color={color} transparent opacity={0.9} />
-        </mesh>
-      ))}
-    </group>
-  );
-};
+      {/* ── ISOMETRIC GLASS PANEL CLUSTER — CSS 3D ── */}
+      <div className="absolute inset-0 flex items-center justify-center" style={{ perspective: 900, perspectiveOrigin: '50% 45%' }}>
+        <div style={{ transformStyle: 'preserve-3d', transform: 'rotateX(18deg) rotateY(-28deg)', position: 'relative', width: 220, height: 220 }}>
 
-// ── Wireframe floating cube ──────────────────────────────────────────────────
-const WireframeCube = ({ position, size, color, rotSpeed }) => {
-  const ref = useRef();
-  const phase = useRef(Math.random() * Math.PI * 2);
-  useFrame(({ clock }) => {
-    ref.current.rotation.x += rotSpeed[0];
-    ref.current.rotation.y += rotSpeed[1];
-    ref.current.position.y = position[1] + Math.sin(clock.getElapsedTime() * 0.8 + phase.current) * 0.15;
-  });
-  return (
-    <group ref={ref} position={position}>
-      <mesh>
-        <boxGeometry args={[size, size, size]} />
-        <meshPhysicalMaterial color="#050810" transparent opacity={0.3} roughness={0.1} metalness={0.9} emissive={color} emissiveIntensity={0.2} />
-      </mesh>
-      <lineSegments>
-        <edgesGeometry args={[new THREE.BoxGeometry(size, size, size)]} />
-        <lineBasicMaterial color={color} transparent opacity={1} />
-      </lineSegments>
-    </group>
-  );
-};
+          {/* Panel 1 — Back left, tall vertical, CYAN border */}
+          <div style={{
+            position: 'absolute', left: -95, top: -70,
+            width: 140, height: 180,
+            background: 'linear-gradient(135deg, rgba(5,12,28,0.92) 0%, rgba(8,18,38,0.85) 100%)',
+            border: '1px solid rgba(0,229,255,0.7)',
+            boxShadow: '0 0 20px rgba(0,229,255,0.2), inset 0 0 20px rgba(0,229,255,0.04)',
+            borderRadius: 8,
+            transform: 'rotateY(20deg)',
+            backdropFilter: 'blur(4px)',
+            animation: 'float-y 4s ease-in-out infinite',
+          }}>
+            {/* Header bar */}
+            <div style={{ height: 6, margin: '10px 10px 0', background: 'rgba(0,229,255,0.5)', borderRadius: 3 }} />
+            {/* Content lines */}
+            {[90, 65, 80, 55, 70, 45].map((w, i) => (
+              <div key={i} style={{ height: 4, margin: `${i === 0 ? 10 : 8}px 10px 0`, width: `${w}%`, background: 'rgba(0,229,255,0.18)', borderRadius: 2 }} />
+            ))}
+            {/* Corner dots */}
+            {[[8,8],[8,'auto'],[8,8],[8,'auto']].map(([t, b], i) => (
+              <div key={i} style={{
+                position: 'absolute', width: 5, height: 5, borderRadius: '50%',
+                background: '#00E5FF', boxShadow: '0 0 8px #00E5FF',
+                top: i < 2 ? 8 : 'auto', bottom: i >= 2 ? 8 : 'auto',
+                left: i % 2 === 0 ? 8 : 'auto', right: i % 2 === 1 ? 8 : 'auto',
+              }} />
+            ))}
+          </div>
 
-// ── JSHub logo in the center ─────────────────────────────────────────────────
-const CenterLogo = () => {
-  const texture = useTexture('/WebsiteLogo.png');
-  const ref = useRef();
-  const glowRef = useRef();
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
-    ref.current.position.y = Math.sin(t * 0.7) * 0.12;
-    glowRef.current.material.opacity = 0.12 + Math.sin(t * 1.2) * 0.06;
-  });
+          {/* Panel 2 — Back right, wide vertical, RED border */}
+          <div style={{
+            position: 'absolute', right: -90, top: -50,
+            width: 150, height: 160,
+            background: 'linear-gradient(135deg, rgba(28,5,5,0.92) 0%, rgba(20,8,8,0.88) 100%)',
+            border: '1px solid rgba(211,47,47,0.7)',
+            boxShadow: '0 0 20px rgba(211,47,47,0.2), inset 0 0 20px rgba(211,47,47,0.04)',
+            borderRadius: 8,
+            transform: 'rotateY(-20deg)',
+            backdropFilter: 'blur(4px)',
+            animation: 'float-y2 4.5s ease-in-out infinite',
+          }}>
+            <div style={{ height: 6, margin: '10px 10px 0', background: 'rgba(211,47,47,0.5)', borderRadius: 3 }} />
+            {[85, 60, 75, 50, 68].map((w, i) => (
+              <div key={i} style={{ height: 4, margin: `${i === 0 ? 10 : 8}px 10px 0`, width: `${w}%`, background: 'rgba(211,47,47,0.18)', borderRadius: 2 }} />
+            ))}
+            {[[8,8],[8,'auto'],[8,8],[8,'auto']].map(([t, b], i) => (
+              <div key={i} style={{
+                position: 'absolute', width: 5, height: 5, borderRadius: '50%',
+                background: '#D32F2F', boxShadow: '0 0 8px #D32F2F',
+                top: i < 2 ? 8 : 'auto', bottom: i >= 2 ? 8 : 'auto',
+                left: i % 2 === 0 ? 8 : 'auto', right: i % 2 === 1 ? 8 : 'auto',
+              }} />
+            ))}
+          </div>
 
-  return (
-    <group ref={ref}>
-      {/* Pulsing glow platform */}
-      <mesh ref={glowRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.5, 0]}>
-        <circleGeometry args={[1.5, 64]} />
-        <meshStandardMaterial color="#D32F2F" emissive="#D32F2F" emissiveIntensity={1} transparent opacity={0.12} toneMapped={false} />
-      </mesh>
-      {/* Logo */}
-      <mesh>
-        <planeGeometry args={[2.4, 2.4]} />
-        <meshBasicMaterial map={texture} transparent alphaTest={0.05} depthWrite={false} />
-      </mesh>
-    </group>
-  );
-};
+          {/* Panel 3 — Front center, FLAT horizontal (like laptop base), CYAN */}
+          <div style={{
+            position: 'absolute', left: -80, bottom: -90,
+            width: 220, height: 110,
+            background: 'linear-gradient(135deg, rgba(5,12,28,0.9) 0%, rgba(5,18,38,0.82) 100%)',
+            border: '1px solid rgba(0,229,255,0.55)',
+            boxShadow: '0 0 25px rgba(0,229,255,0.15), inset 0 0 15px rgba(0,229,255,0.04)',
+            borderRadius: 8,
+            transform: 'rotateX(60deg)',
+            backdropFilter: 'blur(4px)',
+            animation: 'float-y3 5s ease-in-out infinite',
+          }}>
+            <div style={{ height: 5, margin: '8px 10px 0', background: 'rgba(0,229,255,0.4)', borderRadius: 3 }} />
+            {[80, 55, 70].map((w, i) => (
+              <div key={i} style={{ height: 3, margin: `${i === 0 ? 8 : 6}px 10px 0`, width: `${w}%`, background: 'rgba(0,229,255,0.15)', borderRadius: 2 }} />
+            ))}
+          </div>
 
-// ── Full 3D Scene ────────────────────────────────────────────────────────────
-const Scene = () => {
-  return (
-    <>
-      {/* Environment for glass reflections */}
-      <Environment preset="city" />
-      <ambientLight intensity={0.4} />
-      <pointLight position={[0, 0, 0]} intensity={4} color="#D32F2F" distance={10} />
-      <pointLight position={[5, 3, 2]} intensity={3} color="#00E5FF" distance={12} />
-      <pointLight position={[-5, -3, 2]} intensity={3} color="#00E5FF" distance={12} />
-      <pointLight position={[0, 4, -4]} intensity={2} color="#D9A01B" distance={10} />
+          {/* Panel 4 — Small back-top, YELLOW */}
+          <div style={{
+            position: 'absolute', left: -10, top: -100,
+            width: 100, height: 90,
+            background: 'linear-gradient(135deg, rgba(20,15,5,0.92) 0%, rgba(25,18,5,0.85) 100%)',
+            border: '1px solid rgba(217,160,27,0.65)',
+            boxShadow: '0 0 16px rgba(217,160,27,0.18)',
+            borderRadius: 8,
+            transform: 'rotateY(-5deg) rotateX(-5deg)',
+            backdropFilter: 'blur(4px)',
+            animation: 'float-y 5.5s ease-in-out infinite 0.5s',
+          }}>
+            <div style={{ height: 4, margin: '8px 8px 0', background: 'rgba(217,160,27,0.5)', borderRadius: 2 }} />
+            {[80, 55, 70].map((w, i) => (
+              <div key={i} style={{ height: 3, margin: '6px 8px 0', width: `${w}%`, background: 'rgba(217,160,27,0.18)', borderRadius: 2 }} />
+            ))}
+          </div>
 
-      <Stars radius={80} depth={40} count={1800} factor={3} saturation={0} fade speed={0.4} />
+          {/* ── Center Logo (flat, in center of cluster) ── */}
+          <div style={{
+            position: 'absolute', left: '50%', top: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 70, height: 70,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            {/* Pulsing glow disc */}
+            <div style={{
+              position: 'absolute', width: 80, height: 80, borderRadius: '50%',
+              background: 'radial-gradient(ellipse, rgba(211,47,47,0.35) 0%, transparent 70%)',
+              animation: 'pulse-glow 2s ease-in-out infinite',
+            }} />
+            <img src="/WebsiteLogo.png" alt="JSHub" style={{ width: 56, height: 56, objectFit: 'contain', position: 'relative', zIndex: 1 }} />
+          </div>
 
-      {/* ── Orbit rings — all seamlessly looping ── */}
-      <OrbitRing rx={3.8} rz={1.8} tube={0.02}  color="#00E5FF" speed={0.35}  rotX={0.45}  rotZ={0.18}  phase={0} />
-      <OrbitRing rx={3.2} rz={1.55} tube={0.025} color="#D32F2F" speed={-0.55} rotX={-0.35} rotZ={0.22}  phase={1.2} />
-      <OrbitRing rx={2.4} rz={1.15} tube={0.018} color="#D9A01B" speed={0.75}  rotX={0.65}  rotZ={-0.12} phase={2.5} />
-      <OrbitRing rx={4.5} rz={2.2}  tube={0.013} color="#00E5FF" speed={-0.28} rotX={0.12}  rotZ={0.45}  phase={0.8} />
+        </div>
+      </div>
 
-      {/* Traveling glow dots on orbits */}
-      <TravelingDot rx={3.8} rz={1.8}  color="#00E5FF" speed={0.35}  rotX={0.45}  rotZ={0.18}  phase={0} />
-      <TravelingDot rx={3.2} rz={1.55} color="#D32F2F" speed={-0.55} rotX={-0.35} rotZ={0.22}  phase={1.2} />
-      <TravelingDot rx={2.4} rz={1.15} color="#D9A01B" speed={0.75}  rotX={0.65}  rotZ={-0.12} phase={2.5} />
-      <TravelingDot rx={3.8} rz={1.8}  color="#ffffff" speed={0.35}  rotX={0.45}  rotZ={0.18}  phase={Math.PI} />
+      {/* ── Floating decorative shapes in outer space ── */}
 
-      {/* ── Glass panels (isometric arrangement like mockup) ── */}
-      <GlassPanel
-        position={[2.6, 0.5, -0.3]}
-        rotation={[0.15, -0.55, 0.1]}
-        width={2.2} height={1.5}
-        color="#00E5FF"
-        speed={0.7}
-      />
-      <GlassPanel
-        position={[-2.4, 0.2, -0.2]}
-        rotation={[0.1, 0.52, -0.12]}
-        width={1.7} height={2.1}
-        color="#D32F2F"
-        speed={0.9}
-      />
-      <GlassPanel
-        position={[0.8, -1.6, 0.6]}
-        rotation={[-0.2, 0.28, 0.18]}
-        width={1.9} height={1.3}
-        color="#D9A01B"
-        speed={0.6}
-      />
-      <GlassPanel
-        position={[-0.8, 1.6, 0.3]}
-        rotation={[0.22, -0.32, -0.08]}
-        width={1.5} height={1.1}
-        color="#00E5FF"
-        speed={1.1}
-      />
-      <GlassPanel
-        position={[3.3, -0.6, 0.9]}
-        rotation={[0.08, -0.62, 0.04]}
-        width={2.0} height={1.3}
-        color="#D32F2F"
-        speed={0.8}
-      />
+      {/* Top-right cube */}
+      <div style={{
+        position: 'absolute', top: 30, right: 30,
+        width: 28, height: 28,
+        border: '1.5px solid rgba(0,229,255,0.7)',
+        boxShadow: '0 0 8px rgba(0,229,255,0.3)',
+        borderRadius: 3,
+        animation: 'float-y 3.5s ease-in-out infinite, cube-spin 8s linear infinite',
+        transformStyle: 'preserve-3d',
+        transform: 'perspective(200px)',
+      }} />
 
-      {/* ── Floating wireframe cubes ── */}
-      <WireframeCube position={[1.9, 2.4, -1.1]}  size={0.3}  color="#00E5FF" rotSpeed={[0.008, 0.013]} />
-      <WireframeCube position={[-2.9, -1.1, 0.6]} size={0.24} color="#D32F2F" rotSpeed={[0.011, 0.007]} />
-      <WireframeCube position={[3.6, 1.1, -0.4]}  size={0.2}  color="#D9A01B" rotSpeed={[0.007, 0.015]} />
-      <WireframeCube position={[-1.6, -2.1, -0.6]} size={0.26} color="#00E5FF" rotSpeed={[0.013, 0.009]} />
-      <WireframeCube position={[-3.6, 0.6, -1.0]}  size={0.22} color="#D9A01B" rotSpeed={[0.008, 0.012]} />
-      <WireframeCube position={[0.6, 2.9, 0.4]}    size={0.18} color="#D32F2F" rotSpeed={[0.01, 0.014]} />
+      {/* Bottom-left cube */}
+      <div style={{
+        position: 'absolute', bottom: 60, left: 20,
+        width: 22, height: 22,
+        border: '1.5px solid rgba(211,47,47,0.7)',
+        boxShadow: '0 0 8px rgba(211,47,47,0.3)',
+        borderRadius: 2,
+        animation: 'float-y2 4s ease-in-out infinite, cube-spin 10s linear infinite reverse',
+        transformStyle: 'preserve-3d',
+        transform: 'perspective(200px)',
+      }} />
 
-      {/* ── Logo in center ── */}
-      <Suspense fallback={null}>
-        <CenterLogo />
-      </Suspense>
+      {/* Right-side small cube */}
+      <div style={{
+        position: 'absolute', top: '55%', right: 15,
+        width: 18, height: 18,
+        border: '1.5px solid rgba(217,160,27,0.7)',
+        boxShadow: '0 0 8px rgba(217,160,27,0.3)',
+        borderRadius: 2,
+        animation: 'float-y3 3s ease-in-out infinite, cube-spin 12s linear infinite',
+        transformStyle: 'preserve-3d',
+        transform: 'perspective(200px)',
+      }} />
 
-      {/* No limits on orbit control — drag to explore */}
-      <OrbitControls
-        enableZoom={false}
-        enablePan={false}
-        autoRotate
-        autoRotateSpeed={0.5}
-        maxPolarAngle={Math.PI / 1.7}
-        minPolarAngle={Math.PI / 3.5}
-      />
-    </>
-  );
-};
+      {/* Top-left floating dot */}
+      <div style={{
+        position: 'absolute', top: 80, left: 40,
+        width: 8, height: 8, borderRadius: '50%',
+        background: '#00E5FF', boxShadow: '0 0 10px #00E5FF',
+        animation: 'float-y 4s ease-in-out infinite 1s',
+      }} />
 
-// ── Exported component ───────────────────────────────────────────────────────
-const VortexAnimation = () => (
-  <div className="relative w-full h-[650px]">
-    {/* Background radial glows */}
-    <div className="absolute inset-0 pointer-events-none z-0">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[460px] h-[460px] bg-accent-red/6 rounded-full blur-[100px]" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] bg-accent-cyan/8 rounded-full blur-[60px]" />
+      {/* Bottom-right floating dot */}
+      <div style={{
+        position: 'absolute', bottom: 80, right: 60,
+        width: 6, height: 6, borderRadius: '50%',
+        background: '#D32F2F', boxShadow: '0 0 8px #D32F2F',
+        animation: 'float-y2 3.5s ease-in-out infinite 0.5s',
+      }} />
+
     </div>
-
-    <div className="w-full h-full z-10 cursor-grab active:cursor-grabbing">
-      <Canvas
-        camera={{ position: [0, 1.8, 8.5], fov: 48 }}
-        gl={{ antialias: true, alpha: true }}
-        style={{ background: 'transparent' }}
-        dpr={[1, 2]}
-      >
-        <Suspense fallback={null}>
-          <Scene />
-        </Suspense>
-      </Canvas>
-    </div>
-
-    {/* Label */}
-    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none z-20">
-      <p className="text-white/25 text-xs tracking-[0.5em] uppercase font-light">JSHub Agency</p>
-    </div>
-  </div>
-);
+  );
+};
 
 export default VortexAnimation;

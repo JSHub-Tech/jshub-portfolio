@@ -9,18 +9,17 @@ function App() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section id="home" className="relative min-h-[calc(100vh-100px)] flex flex-col lg:flex-row items-center justify-between px-8 lg:px-24">
-        
+      <section id="home" className="relative min-h-screen flex flex-col lg:flex-row items-center justify-between px-8 lg:px-24 overflow-hidden">
+
         {/* Left Side: Hero Text */}
-        <div className="z-10 w-full lg:w-1/2 flex flex-col justify-center mt-12 lg:mt-0">
-          <h1 className="text-5xl lg:text-7xl font-extrabold mb-6 leading-tight tracking-tight mt-24">
-            JSHUB AGENCY: <br/> CRAFTING <br/> 
-            <span className="bg-gradient-to-r from-white via-white/90 to-accent-cyan text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(0,229,255,0.2)]">DISTINGUISHED DIGITAL EXPERIENCES.</span>
+        <div className="relative z-10 w-full lg:w-1/2 flex flex-col justify-center pt-32">
+          <h1 className="text-5xl lg:text-7xl font-extrabold mb-6 leading-tight tracking-tight">
+            JSHUB AGENCY: <br/> CRAFTING <br/>
+            <span className="bg-gradient-to-r from-white via-white/90 to-accent-cyan text-transparent bg-clip-text">DISTINGUISHED DIGITAL EXPERIENCES.</span>
           </h1>
           <p className="text-xl text-white/60 mb-10 max-w-lg font-light tracking-wide">
-            Modern web & mobile solutions for a connected world.
+            Modern web &amp; mobile solutions for a connected world.
           </p>
-          
           <div>
             <button className="bg-accent-red/10 text-accent-red border border-accent-red hover:bg-accent-red hover:text-white hover:shadow-[0_0_25px_rgba(211,47,47,0.6)] transition-all duration-300 font-bold py-4 px-10 rounded-lg tracking-wider text-sm">
               START YOUR PROJECT
@@ -29,10 +28,10 @@ function App() {
         </div>
 
         {/* Right Side: Vortex Animation */}
-        <div className="w-full lg:w-1/2 mt-16 lg:mt-0 flex justify-center items-center">
-            <VortexAnimation />
+        <div className="w-full lg:w-1/2 flex justify-center items-center min-h-[600px]">
+          <VortexAnimation />
         </div>
-        
+
       </section>
       
       <Services />
