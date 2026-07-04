@@ -8,7 +8,7 @@ const ProjectCard = ({ title, size, bgClass, index }) => {
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
-      className={`relative rounded-3xl overflow-hidden group cursor-pointer border border-white/5 bg-[#1D2024]/40 ${size}`}
+      className={`relative rounded-3xl overflow-hidden group cursor-pointer border border-white/5 bg-[#1D2024]/40 flex-shrink-0 w-[80vw] sm:w-[60vw] h-[280px] snap-center md:w-auto md:h-auto md:flex-shrink md:snap-none ${size}`}
     >
       {/* Background Image / Placeholder */}
       <div className={`w-full h-full ${bgClass} opacity-40 group-hover:opacity-80 transition-opacity duration-700 bg-cover bg-center flex items-center justify-center`}>
@@ -30,20 +30,20 @@ const ProjectCard = ({ title, size, bgClass, index }) => {
 
 const FeaturedProjects = () => {
   return (
-    <section id="portfolio" className="min-h-screen px-8 lg:px-24 py-32 bg-[#1A1D21] border-t border-white/5">
+    <section id="portfolio" className="min-h-screen px-0 sm:px-8 lg:px-24 py-24 sm:py-32 border-t border-white/5">
       <div className="max-w-[1400px] mx-auto">
         <motion.h2 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-4xl lg:text-5xl font-extrabold mb-20 text-center tracking-widest text-white/90"
+          className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-12 sm:mb-20 text-center tracking-widest text-white/90 px-8 sm:px-0"
         >
           FEATURED PROJECTS
         </motion.h2>
         
-        {/* Bento Box Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-[280px] gap-6">
+        {/* Mobile: inline horizontal scroller. Desktop (md+): Bento Box Grid Layout */}
+        <div className="flex md:grid md:grid-cols-4 md:auto-rows-[280px] gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory px-8 sm:px-0 md:px-0 pb-4 md:pb-0 scrollbar-hide">
           <ProjectCard index={0} title="Analytics Dashboard" size="md:col-span-2 md:row-span-2" bgClass="bg-accent-cyan/10" />
           <ProjectCard index={1} title="Mobile App UI" size="md:col-span-1 md:row-span-1" bgClass="bg-accent-red/10" />
           <ProjectCard index={2} title="E-Commerce Platform" size="md:col-span-1 md:row-span-1" bgClass="bg-accent-yellow/10" />

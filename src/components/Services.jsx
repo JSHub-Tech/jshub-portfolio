@@ -62,7 +62,7 @@ const Services = () => {
   const services = [
     {
       title: 'Web Design',
-      description: 'Dess, design your taste, and tech. We create beautiful, intuitive digital presences tailored to your brand.',
+      description: 'We craft clean, modern interfaces and intuitive user experiences that bring your brand to life online.',
       linkText: 'View Work',
       color: '#00E5FF', // Cyan
       icon: (
@@ -73,7 +73,7 @@ const Services = () => {
     },
     {
       title: 'Branding',
-      description: 'Dess, design your taste, and tech. We forge unforgettable identities that resonate with your audience.',
+      description: 'We build memorable, cohesive brand identities — from logos to voice — that resonate with your audience.',
       linkText: 'View Work',
       color: '#D32F2F', // Red
       icon: (
@@ -84,7 +84,7 @@ const Services = () => {
     },
     {
       title: 'Marketing',
-      description: 'Devs, design your taste, and tech. Data-driven strategies that accelerate growth and engagement.',
+      description: 'We run data-driven marketing campaigns that boost visibility, engagement, and measurable growth.',
       linkText: 'View Work',
       color: '#D9A01B', // Yellow
       icon: (
@@ -95,7 +95,7 @@ const Services = () => {
     },
     {
       title: 'Development',
-      description: 'Devs, design your taste, and tech. Building robust, scalable platforms for the connected world.',
+      description: 'We engineer robust, scalable web and mobile platforms built to perform in a connected world.',
       linkText: 'View Work',
       color: '#00A896', // Teal
       icon: (
@@ -107,14 +107,14 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="min-h-screen border-t border-white/5 px-8 lg:px-24 py-32 bg-[#1A1D21]">
+    <section id="services" className="min-h-screen border-t border-white/5 px-6 sm:px-8 lg:px-24 py-24 sm:py-32">
       <div className="max-w-[1400px] mx-auto">
         <motion.h2 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-4xl lg:text-5xl font-extrabold mb-20 text-center tracking-widest text-white/90"
+          className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-12 sm:mb-20 text-center tracking-widest text-white/90"
         >
           OUR SERVICES
         </motion.h2>

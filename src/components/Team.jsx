@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const TeamMember = ({ name, role, color, index }) => {
+const TeamMember = ({ name, role, description, color, index }) => {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 50 }}
@@ -30,9 +30,10 @@ const TeamMember = ({ name, role, color, index }) => {
          ></div>
       </div>
       
-      <h3 className="text-2xl font-bold text-white mb-2 tracking-wide">{name}</h3>
+      <h3 className="text-2xl font-bold text-white mb-1 tracking-wide">{name}</h3>
+      <p className="text-sm font-semibold mb-3 tracking-wider" style={{ color }}>{role}</p>
       <p className="text-white/40 text-sm max-w-[220px] leading-relaxed">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.
+        {description}
       </p>
     </motion.div>
   );
@@ -40,26 +41,27 @@ const TeamMember = ({ name, role, color, index }) => {
 
 const Team = () => {
   const team = [
-    { name: 'Michael', role: 'CEO', color: '#00E5FF' },
-    { name: 'Eric', role: 'Lead Developer', color: '#D32F2F' },
-    { name: 'Sama', role: 'Designer', color: '#D9A01B' },
-    { name: 'Brony', role: 'Marketing', color: '#00A896' }
+    { name: 'Muhammad Umer', role: 'CEO', description: 'Leads JSHub Agency\'s vision and strategy, driving innovation and growth across every project.', color: '#00E5FF' },
+    { name: 'Saad Asif', role: 'Founder', description: 'Founded JSHub Agency with a passion for crafting impactful digital experiences from the ground up.', color: '#D32F2F' },
+    { name: 'Jamal Matloob', role: 'Co-Founder', description: 'Co-founded JSHub Agency, shaping its culture and technical direction alongside the founding team.', color: '#D9A01B' },
+    { name: 'Khawaja Bilal', role: 'Software Developer', description: 'Builds and maintains robust, scalable software solutions that power our clients\' digital products.', color: '#00A896' },
+    { name: 'Hassan Raza', role: 'Manager', description: 'Oversees project execution and client relationships, ensuring every delivery meets the highest standard.', color: '#00A3C1' }
   ];
 
   return (
-    <section id="team" className="px-8 lg:px-24 py-32 bg-[#1A1D21] border-t border-white/5 pb-48">
+    <section id="team" className="px-6 sm:px-8 lg:px-24 py-24 sm:py-32 border-t border-white/5 pb-32 sm:pb-48">
       <div className="max-w-[1400px] mx-auto">
         <motion.h2 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-4xl lg:text-5xl font-extrabold mb-24 text-center tracking-widest text-white/90"
+          className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-14 sm:mb-24 text-center tracking-widest text-white/90"
         >
           OUR VISIONARY TEAM
         </motion.h2>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 sm:gap-12">
           {team.map((member, index) => (
             <TeamMember key={index} {...member} index={index} />
           ))}
