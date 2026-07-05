@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, MeshDistortMaterial, Sphere, Stars, PerspectiveCamera, useTexture } from '@react-three/drei';
+import { Float, Sphere, Stars, PerspectiveCamera, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
 const Logo = () => {
@@ -16,8 +16,6 @@ const Logo = () => {
 const GlowingCore = () => {
   return (
     <Float speed={0.8} rotationIntensity={0.5} floatIntensity={1}>
-
-      {/* Outer wireframe */}
       <Sphere args={[1.5, 32, 32]}>
         <meshStandardMaterial
           color="#D32F2F"
@@ -35,14 +33,12 @@ const GlowingCore = () => {
 
 const Particles = () => {
   const points = useRef();
-  
   useFrame((state, delta) => {
     if (points.current) {
       points.current.rotation.y -= delta * 0.02;
       points.current.rotation.x -= delta * 0.01;
     }
   });
-
   return (
     <group ref={points}>
       <Stars radius={10} depth={50} count={1500} factor={4} saturation={1} fade speed={1} />
@@ -52,29 +48,46 @@ const Particles = () => {
 
 const OrbitRings = () => {
   const groupRef = useRef();
-
   useFrame((state, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.x += delta * 0.08;
       groupRef.current.rotation.y += delta * 0.06;
     }
   });
-
   return (
     <group ref={groupRef}>
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[3, 0.02, 16, 100]} />
+        <torusGeometry args={[2.2, 0.02, 16, 100]} />
         <meshStandardMaterial color="#00E5FF" emissive="#00E5FF" emissiveIntensity={1} />
       </mesh>
       <mesh rotation={[Math.PI / 3, Math.PI / 4, 0]}>
-        <torusGeometry args={[4, 0.015, 16, 100]} />
+        <torusGeometry args={[2.7, 0.015, 16, 100]} />
         <meshStandardMaterial color="#D9A01B" emissive="#D9A01B" emissiveIntensity={1} />
       </mesh>
       <mesh rotation={[-Math.PI / 3, -Math.PI / 4, 0]}>
-        <torusGeometry args={[5, 0.01, 16, 100]} />
+        <torusGeometry args={[3.2, 0.01, 16, 100]} />
         <meshStandardMaterial color="#D32F2F" emissive="#D32F2F" emissiveIntensity={1} />
       </mesh>
     </group>
+  );
+};
+
+const FloatingGeometry = ({ position, rotation, color, scale }) => {
+  const meshRef = useRef();
+  useFrame((state, delta) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x += delta * 0.3;
+      meshRef.current.rotation.y += delta * 0.4;
+    }
+  });
+
+  return (
+    <Float speed={2} floatIntensity={1.5} position={position} rotation={rotation}>
+      <mesh ref={meshRef} scale={scale}>
+        <icosahedronGeometry args={[1, 0]} />
+        <meshStandardMaterial color={color} wireframe transparent opacity={0.6} emissive={color} emissiveIntensity={0.8} />
+      </mesh>
+    </Float>
   );
 };
 
@@ -90,6 +103,11 @@ const VortexAnimation = () => {
         <GlowingCore />
         <Particles />
         <OrbitRings />
+        
+        {/* Floating tech elements */}
+        <FloatingGeometry position={[2.2, 2.0, -1.5]} rotation={[0, 0, 0]} color="#00E5FF" scale={0.3} />
+        <FloatingGeometry position={[-2.0, -2.0, -1]} rotation={[0, 0, 0]} color="#D9A01B" scale={0.25} />
+
       </Canvas>
     </div>
   );
