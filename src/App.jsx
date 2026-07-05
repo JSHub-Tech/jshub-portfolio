@@ -1,29 +1,17 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Layout from './components/Layout';
-import VortexAnimation from './components/VortexAnimation';
 import Services from './components/Services';
 import FeaturedProjects from './components/FeaturedProjects';
 import Team from './components/Team';
 
 const socialLinks = [
   {
-    name: 'Email',
-    href: 'mailto:jshubdigital@gmail.com',
-    hoverClass: 'hover:text-accent-cyan',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-        <rect x="3" y="5" width="18" height="14" rx="2" />
-        <path d="M3 7l9 6 9-6" />
-      </svg>
-    )
-  },
-  {
     name: 'X',
     href: 'https://x.com/_jshub',
     hoverClass: 'hover:text-accent-red',
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
         <path strokeLinecap="round" d="M4 4l16 16M20 4L4 20" />
       </svg>
     )
@@ -33,30 +21,18 @@ const socialLinks = [
     href: 'https://www.youtube.com/@jshub.digital',
     hoverClass: 'hover:text-accent-yellow',
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
         <rect x="2" y="6" width="20" height="12" rx="3" />
         <path d="M10 9l6 3-6 3V9z" fill="currentColor" stroke="none" />
       </svg>
     )
   },
   {
-    name: 'TikTok',
-    href: 'https://www.tiktok.com/@__jshub',
-    hoverClass: 'hover:text-accent-teal',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 18V5l9-2v11" />
-        <circle cx="7" cy="18" r="2.5" />
-        <circle cx="16" cy="14" r="2.5" />
-      </svg>
-    )
-  },
-  {
     name: 'Instagram',
     href: 'https://www.instagram.com/_jshub/',
-    hoverClass: 'hover:text-accent-cyan',
+    hoverClass: 'hover:text-accent-blue',
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
         <rect x="3" y="3" width="18" height="18" rx="5" />
         <circle cx="12" cy="12" r="4" />
         <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
@@ -66,9 +42,9 @@ const socialLinks = [
   {
     name: 'LinkedIn',
     href: 'https://www.linkedin.com/company/jshub/',
-    hoverClass: 'hover:text-accent-red',
+    hoverClass: 'hover:text-accent-cyan',
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
         <rect x="3" y="3" width="18" height="18" rx="2" />
         <line x1="8" y1="10" x2="8" y2="16" />
         <circle cx="8" cy="7" r="1" fill="currentColor" stroke="none" />
@@ -80,9 +56,9 @@ const socialLinks = [
   {
     name: 'Facebook',
     href: 'https://www.facebook.com/JSHubb',
-    hoverClass: 'hover:text-accent-yellow',
+    hoverClass: 'hover:text-accent-red',
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
         <path strokeLinecap="round" strokeLinejoin="round" d="M14 9h3V6h-3a3 3 0 00-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 011-1z" />
       </svg>
     )
@@ -163,7 +139,7 @@ function App() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex flex-col lg:flex-row items-center justify-between px-6 sm:px-8 lg:px-24 overflow-hidden">
+      <section id="home" className="relative min-h-screen flex flex-col lg:flex-row items-center justify-between px-6 sm:px-8 pb-16 sm:pb-20 lg:pb-24 lg:px-24 overflow-hidden">
 
         {/* Left Side: Hero Text */}
         <div className="relative z-10 w-full lg:w-1/2 flex flex-col justify-center pt-28 sm:pt-32 text-center lg:text-left items-center lg:items-start">
@@ -181,11 +157,21 @@ function App() {
           </div>
         </div>
 
-        {/* Right Side: Vortex Animation */}
-        <div className="w-full lg:w-1/2 flex justify-center items-center min-h-[320px] sm:min-h-[420px] lg:min-h-[600px] py-12 lg:py-0">
-          <div className="scale-[0.55] sm:scale-75 lg:scale-100 origin-center">
-            <VortexAnimation />
-          </div>
+        {/* Right Side: Hero Animation (video) */}
+        <div className="w-full lg:w-1/2 flex justify-center items-center min-h-[280px] sm:min-h-[380px] lg:min-h-[600px] py-10 lg:py-0 overflow-hidden">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full max-w-[640px] h-auto scale-125 object-cover mix-blend-screen pointer-events-none select-none"
+            style={{
+              maskImage: 'radial-gradient(circle, black 55%, transparent 85%)',
+              WebkitMaskImage: 'radial-gradient(circle, black 55%, transparent 85%)',
+            }}
+          >
+            <source src="/videos/hero-animation.mp4" type="video/mp4" />
+          </video>
         </div>
 
       </section>
@@ -239,7 +225,7 @@ function App() {
           </div>
 
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-white/5">
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-6">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
