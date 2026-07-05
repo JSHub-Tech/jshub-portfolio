@@ -31,7 +31,7 @@ const GlowingCore = () => {
   );
 };
 
-const Particles = () => {
+export const Particles = () => {
   const points = useRef();
   useFrame((state, delta) => {
     if (points.current) {
@@ -101,7 +101,6 @@ const VortexAnimation = () => {
         <pointLight position={[-10, -10, -10]} intensity={2} color="#D32F2F" />
         
         <GlowingCore />
-        <Particles />
         <OrbitRings />
         
         {/* Floating tech elements */}

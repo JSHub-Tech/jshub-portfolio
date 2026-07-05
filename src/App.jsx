@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Canvas } from '@react-three/fiber';
 import Layout from './components/Layout';
 import Services from './components/Services';
 import FeaturedProjects from './components/FeaturedProjects';
 import Team from './components/Team';
-import VortexAnimation from './components/VortexAnimation';
+import VortexAnimation, { Particles } from './components/VortexAnimation';
 
 const socialLinks = [
   {
@@ -141,6 +142,13 @@ function App() {
     <Layout>
       {/* Hero Section */}
       <section id="home" className="relative min-h-screen flex flex-col lg:flex-row items-center justify-between px-6 sm:px-8 pb-16 sm:pb-20 lg:pb-24 lg:px-24 overflow-hidden">
+        
+        {/* Background Stars for Entire Hero Section */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <Canvas>
+            <Particles />
+          </Canvas>
+        </div>
 
         {/* Left Side: Hero Text */}
         <div className="relative z-10 w-full lg:w-1/2 flex flex-col justify-center pt-28 sm:pt-32 text-center lg:text-left items-center lg:items-start">
@@ -159,7 +167,7 @@ function App() {
         </div>
 
         {/* Right Side: Hero Animation (CSS/SVG) */}
-        <div className="w-full lg:w-1/2 flex justify-center items-center py-10 lg:py-0 overflow-visible">
+        <div className="relative z-10 w-full lg:w-1/2 flex justify-center items-center py-10 lg:py-0 overflow-visible">
           <div className="w-full max-w-[320px] sm:max-w-[450px] lg:max-w-[600px]">
             <VortexAnimation />
           </div>
