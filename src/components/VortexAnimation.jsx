@@ -95,7 +95,7 @@ const VortexAnimation = () => {
   return (
     <div className="relative w-full aspect-square select-none pointer-events-none">
       <Canvas>
-        <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={45} />
+        <PerspectiveCamera makeDefault position={[0, 0, 9.5]} fov={45} />
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={2} color="#00E5FF" />
         <pointLight position={[-10, -10, -10]} intensity={2} color="#D32F2F" />
