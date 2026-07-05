@@ -28,11 +28,11 @@ const Navbar = () => {
   // Hover/active sequence: Blue, Red, Yellow, Sea Green, then loops back to Blue.
   // Ensures no two consecutive links ever share the same color.
   const navLinks = [
-    { id: 'home', label: 'Home', color: 'accent-blue' },
-    { id: 'services', label: 'Services', color: 'accent-red' },
-    { id: 'portfolio', label: 'Portfolio', color: 'accent-yellow' },
-    { id: 'team', label: 'About', color: 'accent-teal' },
-    { id: 'contact', label: 'Contact', color: 'accent-blue' },
+    { id: 'home', label: 'Home', activeClass: 'text-accent-blue border-accent-blue', hoverClass: 'hover:text-accent-blue' },
+    { id: 'services', label: 'Services', activeClass: 'text-accent-red border-accent-red', hoverClass: 'hover:text-accent-red' },
+    { id: 'portfolio', label: 'Portfolio', activeClass: 'text-accent-yellow border-accent-yellow', hoverClass: 'hover:text-accent-yellow' },
+    { id: 'team', label: 'About', activeClass: 'text-accent-teal border-accent-teal', hoverClass: 'hover:text-accent-teal' },
+    { id: 'contact', label: 'Contact', activeClass: 'text-accent-blue border-accent-blue', hoverClass: 'hover:text-accent-blue' },
   ];
 
   return (
@@ -47,10 +47,10 @@ const Navbar = () => {
           <a 
             key={link.id}
             href={`#${link.id}`} 
-            className={`pb-1 transition-all duration-300 ${
+            className={`pb-1 border-b-2 border-transparent transition-all duration-300 ${
               activeSection === link.id 
-                ? `text-${link.color} border-b-2 border-${link.color}` 
-                : `hover:text-${link.color}`
+                ? link.activeClass
+                : link.hoverClass
             }`}
           >
             {link.label}
@@ -82,10 +82,10 @@ const Navbar = () => {
               key={link.id}
               href={`#${link.id}`}
               onClick={() => setMenuOpen(false)}
-              className={`pb-1 w-fit transition-all duration-300 ${
+              className={`pb-1 w-fit border-b-2 border-transparent transition-all duration-300 ${
                 activeSection === link.id
-                  ? `text-${link.color} border-b-2 border-${link.color}`
-                  : `hover:text-${link.color}`
+                  ? link.activeClass
+                  : link.hoverClass
               }`}
             >
               {link.label}

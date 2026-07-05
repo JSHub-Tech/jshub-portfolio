@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import Services from './components/Services';
 import FeaturedProjects from './components/FeaturedProjects';
 import Team from './components/Team';
+import VortexAnimation from './components/VortexAnimation';
 
 const socialLinks = [
   {
@@ -157,21 +158,9 @@ function App() {
           </div>
         </div>
 
-        {/* Right Side: Hero Animation (video) */}
-        <div className="w-full lg:w-1/2 flex justify-center items-center min-h-[280px] sm:min-h-[380px] lg:min-h-[600px] py-10 lg:py-0 overflow-hidden">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full max-w-[640px] h-auto scale-125 object-cover mix-blend-screen pointer-events-none select-none"
-            style={{
-              maskImage: 'radial-gradient(circle, black 55%, transparent 85%)',
-              WebkitMaskImage: 'radial-gradient(circle, black 55%, transparent 85%)',
-            }}
-          >
-            <source src="/videos/hero-animation.mp4" type="video/mp4" />
-          </video>
+        {/* Right Side: Hero Animation (CSS/SVG) */}
+        <div className="w-full lg:w-1/2 flex justify-center items-center min-h-[280px] sm:min-h-[380px] lg:min-h-[600px] py-10 lg:py-0 overflow-hidden scale-75 sm:scale-90 lg:scale-100">
+          <VortexAnimation />
         </div>
 
       </section>
