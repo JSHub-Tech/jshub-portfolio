@@ -159,8 +159,10 @@ function App() {
         </div>
 
         {/* Right Side: Hero Animation (CSS/SVG) */}
-        <div className="w-full lg:w-1/2 flex justify-center items-center min-h-[280px] sm:min-h-[380px] lg:min-h-[600px] py-10 lg:py-0 overflow-visible scale-75 sm:scale-90 lg:scale-100">
-          <VortexAnimation />
+        <div className="w-full lg:w-1/2 flex justify-center items-center py-10 lg:py-0 overflow-visible">
+          <div className="w-full max-w-[320px] sm:max-w-[450px] lg:max-w-[600px]">
+            <VortexAnimation />
+          </div>
         </div>
 
       </section>

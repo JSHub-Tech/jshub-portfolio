@@ -93,7 +93,7 @@ const FloatingGeometry = ({ position, rotation, color, scale }) => {
 
 const VortexAnimation = () => {
   return (
-    <div className="relative w-full max-w-[600px] aspect-square select-none">
+    <div className="relative w-full aspect-square select-none pointer-events-none">
       <Canvas>
         <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={45} />
         <ambientLight intensity={0.5} />
