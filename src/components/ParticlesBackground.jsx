@@ -22,9 +22,13 @@ const ParticlesBackground = ({ count = 4000 }) => {
     const positions = new Float32Array(count * 3);
     const originalPositions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      const x = (Math.random() - 0.5) * 50;
-      const y = (Math.random() - 0.5) * 50;
-      const z = (Math.random() - 0.5) * 35 - 5; // spread further back
+      const z = Math.random() * 40 - 35; // Distribute evenly from z=-35 to z=5
+      const scale = (5 - z) / 5;
+      
+      // Spawn particles so they cover the exact visual size of the screen at their specific depth
+      const x = (Math.random() - 0.5) * viewport.width * scale * 1.5;
+      const y = (Math.random() - 0.5) * viewport.height * scale * 1.5;
+
       positions[i * 3] = x;
       positions[i * 3 + 1] = y;
       positions[i * 3 + 2] = z;
@@ -34,7 +38,7 @@ const ParticlesBackground = ({ count = 4000 }) => {
       originalPositions[i * 3 + 2] = z;
     }
     return [positions, originalPositions];
-  }, [count]);
+  }, [count, viewport]);
 
   const circleTexture = useMemo(() => {
     const canvas = document.createElement('canvas');
@@ -60,33 +64,46 @@ const ParticlesBackground = ({ count = 4000 }) => {
 
     for (let i = 0; i < count; i++) {
       const idx = i * 3;
-      const px = posArray[idx];
-      const py = posArray[idx + 1];
+      let px = posArray[idx];
+      let py = posArray[idx + 1];
       let pz = posArray[idx + 2];
       
-      const ox = originalPositions[idx];
-      const oy = originalPositions[idx + 1];
+      let ox = originalPositions[idx];
+      let oy = originalPositions[idx + 1];
 
-      // Slowly drift towards the camera
       pz += 0.015;
-      // If it passes the camera (z > 5), reset it to the far back
+      
+      // If it passes the camera, respawn it at the far back with completely new random coordinates!
       if (pz > 5) {
         pz = -35;
+        const scale = (5 - pz) / 5; // Scale at depth -35 is 8
+        px = ox = (Math.random() - 0.5) * viewport.width * scale * 1.5;
+        py = oy = (Math.random() - 0.5) * viewport.height * scale * 1.5;
+        posArray[idx] = px;
+        posArray[idx + 1] = py;
+        originalPositions[idx] = ox;
+        originalPositions[idx + 1] = oy;
       }
+      
       posArray[idx + 2] = pz;
 
-      const dx = currentMousePos.current.x - px;
-      const dy = currentMousePos.current.y - py;
+      const scaleFactor = (5 - pz) / 5;
+      
+      const projX = px / scaleFactor;
+      const projY = py / scaleFactor;
+
+      const dx = currentMousePos.current.x - projX;
+      const dy = currentMousePos.current.y - projY;
       const distanceSq = dx * dx + dy * dy;
       
-      const repulsionRadius = 6;
+      const repulsionRadius = 2.5;
 
       if (distanceSq < repulsionRadius * repulsionRadius) {
         const distance = Math.sqrt(distanceSq);
         const force = (repulsionRadius - distance) / repulsionRadius;
         
-        posArray[idx] -= (dx / distance) * force * 0.4;
-        posArray[idx + 1] -= (dy / distance) * force * 0.4;
+        posArray[idx] -= (dx / distance) * force * 0.6 * scaleFactor;
+        posArray[idx + 1] -= (dy / distance) * force * 0.6 * scaleFactor;
       }
 
       posArray[idx] += (ox - posArray[idx]) * 0.05;
@@ -94,10 +111,6 @@ const ParticlesBackground = ({ count = 4000 }) => {
     }
 
     positionsAttribute.needsUpdate = true;
-    
-    // Add a slight tilt rotation to the whole system
-    mesh.current.rotation.y = Math.sin(Date.now() * 0.0001) * 0.1;
-    mesh.current.rotation.x = Math.cos(Date.now() * 0.0001) * 0.1;
   });
 
   return (
