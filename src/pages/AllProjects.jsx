@@ -2,33 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 
-// Note: You can expand this array or move it to a dedicated data file later.
-const allProjects = [
-  {
-    id: 1,
-    title: 'SENTIX',
-    category: 'AI / ML Platform',
-    description: 'A sentiment-aware movie recommendation and social discovery platform built on a polyglot persistence architecture.',
-    image: '/Projects/sentix/Sentix01.jpg',
-    tags: ['FastAPI', 'Neo4j', 'Recommendation Engine']
-  },
-  {
-    id: 2,
-    title: 'AERO',
-    category: 'Database Systems',
-    description: 'A polyglot, self-healing airline backend combining ACID transactions, graph-based routing, and live telemetry.',
-    image: '/Projects/aero/Aero01.jpeg',
-    tags: ['FastAPI', 'Neo4j', 'Redis']
-  },
-  {
-    id: 3,
-    title: 'SAGE',
-    category: 'AI / ML Platform',
-    description: 'A multi-agent Retrieval-Augmented Generation assistant delivering grounded, domain-specific support for Samsung appliances.',
-    image: '/Projects/sage/Sage01.jpeg',
-    tags: ['LangGraph', 'RAG', 'Multi-Agent']
-  }
-];
+import { projectsList as allProjects } from '../data/projects';
 
 const AllProjects = () => {
   const navigate = useNavigate();
@@ -36,6 +10,7 @@ const AllProjects = () => {
   const lastScrollY = React.useRef(0);
 
   useEffect(() => {
+    document.title = 'All Projects | JSHub';
     window.scrollTo(0, 0);
     
     const handleScroll = () => {

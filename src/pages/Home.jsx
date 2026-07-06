@@ -16,6 +16,7 @@ export default function Home() {
   const { hash } = useLocation();
 
   useEffect(() => {
+    document.title = 'JSHub | Premium Digital Agency';
     if (hash) {
       setTimeout(() => {
         const element = document.getElementById(hash.replace('#', ''));
