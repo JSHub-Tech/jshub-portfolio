@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const projects = [
   {
     id: 1,
-    title: 'Sentix',
+    title: 'SENTIX',
     category: 'AI / ML Platform',
     description: 'A sentiment-aware movie recommendation and social discovery platform built on a polyglot persistence architecture.',
     size: 'md:col-span-2 md:row-span-2', // Large square
@@ -14,7 +14,7 @@ const projects = [
   },
   {
     id: 2,
-    title: 'AERO ADMS',
+    title: 'AERO',
     category: 'Database Systems',
     description: 'A polyglot, self-healing airline backend combining ACID transactions, graph-based routing, and live telemetry.',
     size: 'md:col-span-1 md:row-span-1', // Small square

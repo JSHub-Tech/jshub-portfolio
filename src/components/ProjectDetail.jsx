@@ -104,9 +104,9 @@ const Icon = {
 // Mock data for projects — replace/extend screenshot URLs and descriptions as needed.
 const projectData = {
   1: {
-    title: 'Sentix',
+    title: 'SENTIX',
     category: 'AI / ML Platform',
-    accent: '#00E5FF',
+    accent: '#A855F7',
     screenshots: [
       '/Projects/sentix/Sentix01.jpg',
       '/Projects/sentix/Sentix02.jpg',
@@ -200,7 +200,7 @@ const projectData = {
     },
   },
   2: {
-    title: 'AERO ADMS',
+    title: 'AERO',
     category: 'Database Systems',
     accent: '#00A896',
     screenshots: [
@@ -218,7 +218,7 @@ const projectData = {
     description: {
       tagline: 'A polyglot, self-healing airline backend that balances strict transactional booking with real-time routing and telemetry.',
       overview:
-        "AERO ADMS is a distributed airline database system built to resolve a common conflict in aviation platforms: the need for airtight, ACID-compliant bookings alongside fast, flexible route search and live tracking. Instead of forcing one database to handle every workload, the system splits responsibilities across four specialized engines, containerized with Docker and synchronized automatically at startup. The result is a backend that prevents double-booked seats, calculates multi-hop layovers in milliseconds, and streams live aircraft positions without ever slowing down the booking core.",
+        "AERO is a distributed airline database system built to resolve a common conflict in aviation platforms: the need for airtight, ACID-compliant bookings alongside fast, flexible route search and live tracking. Instead of forcing one database to handle every workload, the system splits responsibilities across four specialized engines, containerized with Docker and synchronized automatically at startup. The result is a backend that prevents double-booked seats, calculates multi-hop layovers in milliseconds, and streams live aircraft positions without ever slowing down the booking core.",
       architectureTitle: 'Polyglot Persistence Strategy',
       architectureIcon: Icon.layers,
       architecture: [
