@@ -31,20 +31,7 @@ const GlowingCore = () => {
   );
 };
 
-export const Particles = () => {
-  const points = useRef();
-  useFrame((state, delta) => {
-    if (points.current) {
-      points.current.rotation.y -= delta * 0.02;
-      points.current.rotation.x -= delta * 0.01;
-    }
-  });
-  return (
-    <group ref={points}>
-      <Stars radius={10} depth={50} count={1500} factor={4} saturation={1} fade speed={1} />
-    </group>
-  );
-};
+
 
 const OrbitRings = () => {
   const groupRef = useRef();

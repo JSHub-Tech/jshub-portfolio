@@ -30,7 +30,7 @@ const Marquee = ({ reverse = false }) => (
 
 const MarqueeTicker = () => {
   return (
-    <section className="border-t border-b border-white/5 bg-[#16191D] py-5 overflow-hidden">
+    <section className="border-t border-b border-white/5 bg-white/[0.01] py-5 overflow-hidden">
       <style>{`
         @keyframes marquee         { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         @keyframes marquee-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }

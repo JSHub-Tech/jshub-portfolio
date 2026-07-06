@@ -99,7 +99,7 @@ const ProjectCard = ({ project, index }) => {
 
 const FeaturedProjects = () => {
   return (
-    <section id="portfolio" className="min-h-screen px-0 sm:px-8 lg:px-24 py-24 sm:py-32 border-t border-white/5 bg-[#0f1114]">
+    <section id="portfolio" className="min-h-screen px-0 sm:px-8 lg:px-24 py-24 sm:py-32 border-t border-white/5 bg-transparent">
       <div className="max-w-[1400px] mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}

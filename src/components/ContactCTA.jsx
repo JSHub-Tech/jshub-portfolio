@@ -8,7 +8,7 @@ const scrollToContact = (e) => {
 
 const ContactCTA = () => {
   return (
-    <section className="border-t border-white/5 bg-[#1A1D21] px-8 lg:px-24 py-32 relative overflow-hidden">
+    <section className="border-t border-white/5 bg-white/[0.02] px-8 lg:px-24 py-32 relative overflow-hidden">
 
       {/* Big background glow */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
