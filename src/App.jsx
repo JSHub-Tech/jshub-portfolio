@@ -245,7 +245,7 @@ function App() {
             {/* Col 1 — Logo + tagline */}
             <div className="lg:col-span-1">
               <div className="flex items-center gap-3 mb-4">
-                <img src="/WebsiteLogo.png" alt="JSHub Logo" className="h-9" />
+                <img src="/WebsiteLogo.svg" alt="JSHub Logo" className="h-9" />
                 <span className="text-white font-extrabold tracking-widest text-lg">JSHub</span>
               </div>
               <p className="text-white/40 text-sm leading-relaxed max-w-[240px]">
