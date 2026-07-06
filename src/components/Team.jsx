@@ -1,6 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+// Map each person's name to their photo path
+const PHOTOS = {
+  'Muhammad Umer': '/Team/Umer.png',
+  'Jamal Matloob': '/Team/Jamal.png',
+  'Khawaja Bilal': '/Team/Bilal.png',
+  'Hassan Raza':   '/Team/Hassan.png',
+  'Saad Asif':     '/Team/Saad.png',
+};
+
 const TeamMember = ({ name, role, description, color, index }) => {
   return (
     <motion.div 
@@ -12,22 +21,24 @@ const TeamMember = ({ name, role, description, color, index }) => {
     >
       <div className="relative w-56 h-56 mb-8 rounded-[2.5rem] overflow-hidden border border-white/5 group-hover:border-white/20 transition-all duration-500 bg-[#1D2024]">
          
-         {/* Placeholder Avatar - Replace with actual images */}
-         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#2a2e33] to-[#121417]">
-             <span className="text-white/20 text-6xl font-black">{name.charAt(0)}</span>
-         </div>
+        {/* Team member photo */}
+        <img
+          src={PHOTOS[name]}
+          alt={name}
+          className="absolute inset-0 w-full h-full object-cover object-top"
+        />
+
+        {/* Hover Glow Underneath */}
+        <div 
+          className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[90%] h-[40px] blur-[30px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+          style={{ backgroundColor: color }}
+        />
          
-         {/* Hover Glow Underneath */}
-         <div 
-            className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[90%] h-[40px] blur-[30px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-            style={{ backgroundColor: color }}
-         ></div>
-         
-         {/* Bottom Accent Line */}
-         <div 
-            className="absolute bottom-0 left-0 w-full h-[6px] transition-all duration-500 opacity-50 group-hover:opacity-100"
-            style={{ backgroundColor: color, boxShadow: `0 0 20px ${color}` }}
-         ></div>
+        {/* Bottom Accent Line */}
+        <div 
+          className="absolute bottom-0 left-0 w-full h-[6px] transition-all duration-500 opacity-50 group-hover:opacity-100"
+          style={{ backgroundColor: color, boxShadow: `0 0 20px ${color}` }}
+        />
       </div>
       
       <h3 className="text-2xl font-bold text-white mb-1 tracking-wide">{name}</h3>
@@ -41,11 +52,11 @@ const TeamMember = ({ name, role, description, color, index }) => {
 
 const Team = () => {
   const team = [
-    { name: 'Muhammad Umer', role: 'CEO', description: 'Leads JSHub Agency\'s vision and strategy, driving innovation and growth across every project.', color: '#00E5FF' },
-    { name: 'Jamal Matloob', role: 'Founder', description: 'Founded JSHub Agency with a vision to craft impactful digital experiences and lead the next generation of web innovation.', color: '#D9A01B' },
-    { name: 'Khawaja Bilal', role: 'Software Developer', description: 'Builds and maintains robust, scalable software solutions that power our clients\' digital products.', color: '#00A896' },
-    { name: 'Hassan Raza', role: 'Manager', description: 'Oversees project execution and client relationships, ensuring every delivery meets the highest standard.', color: '#00A3C1' },
-    { name: 'Saad Asif', role: 'Web Developer', description: 'Designs and develops modern, responsive web experiences with a focus on clean code and user experience.', color: '#D32F2F' },
+    { name: 'Muhammad Umer', role: 'CEO',               description: "Leads JSHub Agency's vision and strategy, driving innovation and growth across every project.",                                    color: '#00E5FF' },
+    { name: 'Jamal Matloob', role: 'Founder',           description: 'Founded JSHub Agency with a vision to craft impactful digital experiences and lead the next generation of web innovation.',    color: '#D9A01B' },
+    { name: 'Khawaja Bilal', role: 'Software Developer', description: "Builds and maintains robust, scalable software solutions that power our clients' digital products.",                           color: '#00A896' },
+    { name: 'Hassan Raza',   role: 'Manager',            description: 'Oversees project execution and client relationships, ensuring every delivery meets the highest standard.',                    color: '#00A3C1' },
+    { name: 'Saad Asif',     role: 'Web Developer',      description: 'Designs and develops modern, responsive web experiences with a focus on clean code and user experience.',                     color: '#D32F2F' },
   ];
 
   return (
