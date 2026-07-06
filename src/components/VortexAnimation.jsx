@@ -1,76 +1,78 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Float, ContactShadows, Stars, useTexture } from '@react-three/drei';
+import { Float, Sphere, Stars, PerspectiveCamera, useTexture } from '@react-three/drei';
+import * as THREE from 'three';
 
-const GlowingRing = ({ radius, tube, color, speed, rotationAxis, ...props }) => {
-  const meshRef = useRef();
-  
+const Logo = () => {
+  const texture = useTexture('/WebsiteLogo.png');
+  return (
+    <mesh position={[0, 0, 1.3]} scale={[0.8, 0.8, 0.8]}>
+      <planeGeometry args={[1, 1]} />
+      <meshStandardMaterial map={texture} transparent emissive="white" emissiveIntensity={0.2} emissiveMap={texture} />
+    </mesh>
+  );
+};
+
+const GlowingCore = () => {
+  return (
+    <Float speed={0.8} rotationIntensity={0.5} floatIntensity={1}>
+      <Sphere args={[1.5, 32, 32]}>
+        <meshStandardMaterial
+          color="#D32F2F"
+          wireframe
+          transparent
+          opacity={0.15}
+          emissive="#D32F2F"
+          emissiveIntensity={0.5}
+        />
+      </Sphere>
+      <Logo />
+    </Float>
+  );
+};
+
+
+
+const OrbitRings = () => {
+  const groupRef = useRef();
   useFrame((state, delta) => {
-    if (rotationAxis === 'x') meshRef.current.rotation.x += speed * delta;
-    if (rotationAxis === 'y') meshRef.current.rotation.y += speed * delta;
-    if (rotationAxis === 'z') meshRef.current.rotation.z += speed * delta;
+    if (groupRef.current) {
+      groupRef.current.rotation.x += delta * 0.08;
+      groupRef.current.rotation.y += delta * 0.06;
+    }
+  });
+  return (
+    <group ref={groupRef}>
+      <mesh rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[2.2, 0.02, 16, 100]} />
+        <meshStandardMaterial color="#00E5FF" emissive="#00E5FF" emissiveIntensity={1} />
+      </mesh>
+      <mesh rotation={[Math.PI / 3, Math.PI / 4, 0]}>
+        <torusGeometry args={[2.7, 0.015, 16, 100]} />
+        <meshStandardMaterial color="#D9A01B" emissive="#D9A01B" emissiveIntensity={1} />
+      </mesh>
+      <mesh rotation={[-Math.PI / 3, -Math.PI / 4, 0]}>
+        <torusGeometry args={[3.2, 0.01, 16, 100]} />
+        <meshStandardMaterial color="#D32F2F" emissive="#D32F2F" emissiveIntensity={1} />
+      </mesh>
+    </group>
+  );
+};
+
+const FloatingGeometry = ({ position, rotation, color, scale }) => {
+  const meshRef = useRef();
+  useFrame((state, delta) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x += delta * 0.3;
+      meshRef.current.rotation.y += delta * 0.4;
+    }
   });
 
   return (
-    <mesh ref={meshRef} {...props}>
-      <torusGeometry args={[radius, tube, 32, 100]} />
-      <meshStandardMaterial 
-        color={color} 
-        emissive={color} 
-        emissiveIntensity={3} 
-        toneMapped={false} 
-      />
-    </mesh>
-  );
-};
-
-// Represents the floating abstract panels around the screen
-const FloatingPanel = ({ position, color, args }) => (
-  <Float speed={3} rotationIntensity={1} floatIntensity={2} position={position}>
-    <mesh castShadow>
-      <boxGeometry args={args} />
-      <meshPhysicalMaterial 
-        color="#1D2024" 
-        emissive={color}
-        emissiveIntensity={0.2}
-        transparent={true} 
-        opacity={0.8} 
-        roughness={0.2} 
-        metalness={0.8}
-        clearcoat={1}
-      />
-    </mesh>
-  </Float>
-);
-
-// Loads the user's logo and displays it on a 3D plane
-const LogoMesh = () => {
-  const texture = useTexture('/WebsiteLogo.png');
-  return (
-    <mesh position={[0, 0, 0.11]}>
-      <planeGeometry args={[2.5, 2.5]} />
-      <meshBasicMaterial map={texture} transparent={true} />
-    </mesh>
-  );
-};
-
-const GlassScreen = () => {
-  return (
-    <Float speed={2} rotationIntensity={0.2} floatIntensity={1}>
-      <mesh castShadow>
-        <boxGeometry args={[5, 3.2, 0.1]} />
-        <meshPhysicalMaterial 
-          color="#111111" 
-          transparent={true} 
-          opacity={0.6} 
-          roughness={0.1} 
-          metalness={0.9}
-          clearcoat={1}
-          clearcoatRoughness={0.1}
-        />
-        <React.Suspense fallback={null}>
-          <LogoMesh />
-        </React.Suspense>
+    <Float speed={2} floatIntensity={1.5} position={position} rotation={rotation}>
+      <mesh ref={meshRef} scale={scale}>
+        <icosahedronGeometry args={[1, 0]} />
+        <meshStandardMaterial color={color} wireframe transparent opacity={0.6} emissive={color} emissiveIntensity={0.8} />
       </mesh>
     </Float>
   );
@@ -78,54 +80,21 @@ const GlassScreen = () => {
 
 const VortexAnimation = () => {
   return (
-    <div className="relative w-full h-[600px] flex items-center justify-center overflow-hidden">
-      
-      {/* Background Soft Glow */}
-      <div className="absolute w-[80%] h-[80%] bg-accent-cyan/10 rounded-full blur-[100px] z-0 pointer-events-none"></div>
+    <div className="relative w-full aspect-square select-none pointer-events-none">
+      <Canvas>
+        <PerspectiveCamera makeDefault position={[0, 0, 9.5]} fov={45} />
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} intensity={2} color="#00E5FF" />
+        <pointLight position={[-10, -10, -10]} intensity={2} color="#D32F2F" />
+        
+        <GlowingCore />
+        <OrbitRings />
+        
+        {/* Floating tech elements */}
+        <FloatingGeometry position={[2.2, 2.0, -1.5]} rotation={[0, 0, 0]} color="#00E5FF" scale={0.3} />
+        <FloatingGeometry position={[-2.0, -2.0, -1]} rotation={[0, 0, 0]} color="#D9A01B" scale={0.25} />
 
-      {/* The 3D Canvas */}
-      <div className="w-full h-full z-10 cursor-grab active:cursor-grabbing">
-        <Canvas camera={{ position: [0, 0, 9], fov: 45 }}>
-          
-          <color attach="background" args={['#1A1D21']} />
-          
-          {/* Lighting to make the materials look like shiny glass/metal */}
-          <ambientLight intensity={2} />
-          <directionalLight position={[10, 10, 5]} intensity={3} color="#00E5FF" />
-          <directionalLight position={[-10, -10, 5]} intensity={3} color="#D32F2F" />
-          
-          {/* Floating space dust/stars in the background */}
-          <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
-
-          {/* Orbiting Neon Rings */}
-          <group rotation={[Math.PI / 3, 0, 0]}>
-            <GlowingRing radius={3.5} tube={0.03} color="#00E5FF" speed={1} rotationAxis="z" />
-            <GlowingRing radius={2.8} tube={0.04} color="#D32F2F" speed={-1.5} rotationAxis="z" />
-            <GlowingRing radius={2.0} tube={0.02} color="#D9A01B" speed={2} rotationAxis="z" />
-          </group>
-
-          {/* The Interactive Glass Screen in the Center */}
-          <GlassScreen />
-          
-          {/* Floating UI Elements */}
-          <FloatingPanel position={[3.5, 1.5, 1]} color="#00E5FF" args={[1.5, 1, 0.1]} />
-          <FloatingPanel position={[-3.5, -1.5, 1]} color="#D9A01B" args={[1, 1.5, 0.1]} />
-          <FloatingPanel position={[3, -2, -1]} color="#D32F2F" args={[1.2, 0.8, 0.1]} />
-
-          {/* Floor Shadow */}
-          <ContactShadows position={[0, -4, 0]} opacity={0.8} scale={20} blur={2} far={4} color="#000000" />
-          
-          {/* Camera Controls */}
-          <OrbitControls 
-            enableZoom={false} 
-            autoRotate 
-            autoRotateSpeed={1} 
-            maxPolarAngle={Math.PI / 2 + 0.2} 
-            minPolarAngle={Math.PI / 2 - 0.5} 
-          />
-        </Canvas>
-      </div>
-
+      </Canvas>
     </div>
   );
 };
