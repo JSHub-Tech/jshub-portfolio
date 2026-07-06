@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { FaLinkedinIn, FaInstagram, FaXTwitter, FaTiktok, FaYoutube, FaWhatsapp } from 'react-icons/fa6';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import Layout from './components/Layout';
 import Services from './components/Services';
@@ -11,6 +12,8 @@ import Testimonials from './components/Testimonials';
 import Team from './components/Team';
 import ContactCTA from './components/ContactCTA';
 import VortexAnimation, { Particles } from './components/VortexAnimation';
+import Loader from './components/Loader';
+import ProjectDetail from './components/ProjectDetail';
 
 const socialLinks = [
   {
@@ -125,7 +128,22 @@ const ContactForm = () => {
   );
 };
 
-function App() {
+function Home() {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(hash.replace('#', ''));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [hash]);
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -178,7 +196,7 @@ function App() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.6 }}
             className="text-center mb-14"
           >
@@ -196,7 +214,7 @@ function App() {
               rel="noopener noreferrer"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ duration: 0.5, delay: 0.1 }}
               className="group flex flex-col justify-between p-8 rounded-3xl border border-white/5 bg-[#1D2024]/60 hover:border-[#25D366]/30 hover:bg-[#25D366]/5 transition-all duration-500 cursor-pointer"
             >
@@ -219,7 +237,7 @@ function App() {
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ duration: 0.5, delay: 0.2 }}
               className="p-8 rounded-3xl border border-white/5 bg-[#1D2024]/60"
             >
@@ -279,24 +297,24 @@ function App() {
               <h4 className="text-white/80 font-bold tracking-widest text-xs uppercase mb-6">Contact</h4>
               <ul className="flex flex-col gap-4">
                 <li>
-                  <a href="mailto:jshubdigital@gmail.com" className="text-white/40 text-sm hover:text-accent-cyan transition-colors duration-300 flex items-start gap-3 group">
+                  <span className="text-white/40 text-sm hover:text-accent-cyan transition-colors duration-300 flex items-start gap-3 group cursor-default">
                     <svg className="w-4 h-4 mt-0.5 flex-shrink-0 group-hover:text-accent-cyan text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
                     jshubdigital@gmail.com
-                  </a>
+                  </span>
                 </li>
                 <li>
-                  <a href="tel:+923106182610" className="text-white/40 text-sm hover:text-accent-cyan transition-colors duration-300 flex items-start gap-3 group">
+                  <span className="text-white/40 text-sm hover:text-accent-cyan transition-colors duration-300 flex items-start gap-3 group cursor-default">
                     <svg className="w-4 h-4 mt-0.5 flex-shrink-0 group-hover:text-accent-cyan text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                     </svg>
                     +92 310 618 2610
-                  </a>
+                  </span>
                 </li>
                 <li>
-                  <span className="text-white/40 text-sm flex items-start gap-3">
-                    <svg className="w-4 h-4 mt-0.5 flex-shrink-0 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <span className="text-white/40 text-sm hover:text-accent-cyan transition-colors duration-300 flex items-start gap-3 group cursor-default">
+                    <svg className="w-4 h-4 mt-0.5 flex-shrink-0 group-hover:text-accent-cyan text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                     </svg>
@@ -357,6 +375,23 @@ function App() {
       </footer>
     </Layout>
   )
+}
+
+function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  return (
+    <>
+      <AnimatePresence>
+        {isLoading && <Loader onLoadingComplete={() => setIsLoading(false)} />}
+      </AnimatePresence>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/project/:id" element={<ProjectDetail />} />
+      </Routes>
+    </>
+  );
 }
 
 export default App;

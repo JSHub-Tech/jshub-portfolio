@@ -1,17 +1,48 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 const ServiceCard = ({ title, description, linkText, color, icon, index }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   return (
     <motion.div 
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: false, margin: "-100px" }}
         transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
-        className="group relative flex flex-col justify-between p-8 rounded-3xl bg-[#1D2024]/80 backdrop-blur-md border border-white/5 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 cursor-pointer h-full min-h-[320px]"
         style={{
+            rotateX,
+            rotateY,
+            transformStyle: "preserve-3d",
             boxShadow: `0 10px 40px -10px rgba(0,0,0,0.5)`,
         }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="group relative flex flex-col justify-between p-8 rounded-3xl bg-[#1D2024]/80 backdrop-blur-md border border-white/5 overflow-hidden transition-all duration-500 cursor-pointer h-full min-h-[320px]"
     >
         {/* Glow underneath the card based on its accent color */}
         <div 
@@ -25,34 +56,37 @@ const ServiceCard = ({ title, description, linkText, color, icon, index }) => {
             style={{ backgroundColor: color, '--tw-shadow-color': color }}
         ></div>
 
-        <div className="z-10">
-            {/* Icon Box */}
-            <div 
-                className="w-14 h-14 rounded-2xl flex items-center justify-center mb-8 border border-white/5 shadow-lg transition-transform duration-500 group-hover:scale-110"
-                style={{ backgroundColor: `${color}15` }} // 15 is hex for low opacity
-            >
-                <div style={{ color: color }}>
-                    {icon}
-                </div>
-            </div>
-            
-            <h3 className="text-2xl font-bold text-white mb-3 tracking-wide">{title}</h3>
-            <p className="text-white/50 text-sm leading-relaxed max-w-[95%] mb-8">
-                {description}
-            </p>
-        </div>
+        {/* Transform inner content to create parallax depth */}
+        <div style={{ transform: "translateZ(50px)" }} className="flex flex-col h-full pointer-events-none relative z-10">
 
-        <div className="z-10 mt-auto">
-            <a 
-                href="#" 
-                className="text-sm font-semibold tracking-wider transition-all duration-300 flex items-center gap-2 hover:gap-3"
-                style={{ color: color }}
-            >
-                {linkText}
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-            </a>
+            <div className="z-10 flex-grow">
+                {/* Icon Box */}
+                <div 
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-8 border border-white/5 shadow-lg transition-transform duration-500 group-hover:scale-110"
+                    style={{ backgroundColor: `${color}15` }}
+                >
+                    <div style={{ color: color }}>
+                        {icon}
+                    </div>
+                </div>
+                
+                <h3 className="text-2xl font-bold text-white mb-3 tracking-wide">{title}</h3>
+                <p className="text-white/50 text-sm leading-relaxed max-w-[95%] mb-8">
+                    {description}
+                </p>
+            </div>
+
+            <div className="z-10 mt-auto">
+                <span 
+                    className="text-sm font-semibold tracking-wider transition-all duration-300 flex items-center gap-2 group-hover:gap-3"
+                    style={{ color: color }}
+                >
+                    {linkText}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </span>
+            </div>
         </div>
     </motion.div>
   );
@@ -112,7 +146,7 @@ const Services = () => {
         <motion.h2 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.6 }}
           className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-12 sm:mb-20 text-center tracking-widest text-white/90"
         >
