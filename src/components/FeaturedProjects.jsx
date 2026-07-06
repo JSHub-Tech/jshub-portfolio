@@ -2,35 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-const projects = [
-  {
-    id: 1,
-    title: 'SENTIX',
-    category: 'AI / ML Platform',
-    description: 'A sentiment-aware movie recommendation and social discovery platform built on a polyglot persistence architecture.',
-    size: 'md:col-span-2 md:row-span-2', // Large square
-    image: '/Projects/sentix/Sentix01.jpg',
-    tags: ['FastAPI', 'Neo4j', 'Recommendation Engine']
-  },
-  {
-    id: 2,
-    title: 'AERO',
-    category: 'Database Systems',
-    description: 'A polyglot, self-healing airline backend combining ACID transactions, graph-based routing, and live telemetry.',
-    size: 'md:col-span-1 md:row-span-1', // Small square
-    image: '/Projects/aero/Aero01.jpeg',
-    tags: ['FastAPI', 'Neo4j', 'Redis']
-  },
-  {
-    id: 3,
-    title: 'SAGE',
-    category: 'AI / ML Platform',
-    description: 'A multi-agent Retrieval-Augmented Generation assistant delivering grounded, domain-specific support for Samsung appliances.',
-    size: 'md:col-span-1 md:row-span-1', // Small square
-    image: '/Projects/sage/Sage01.jpeg',
-    tags: ['LangGraph', 'RAG', 'Multi-Agent']
-  }
-];
+import { projectsList as projects } from '../data/projects';
 
 const ProjectCard = ({ project, index }) => {
   return (
