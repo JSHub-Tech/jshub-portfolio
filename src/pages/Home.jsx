@@ -20,16 +20,14 @@ export default function Home() {
       setTimeout(() => {
         const element = document.getElementById(hash.replace('#', ''));
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: 'auto' });
         }
-      }, 100);
-    } else {
-      window.scrollTo(0, 0);
+      }, 0);
     }
   }, [hash]);
 
   return (
-    <Layout>
+    <>
       <Hero />
       <Services />
       <Stats />
@@ -40,6 +38,6 @@ export default function Home() {
       <ContactSection />
       <Team />
       <Footer />
-    </Layout>
+    </>
   );
 }

@@ -9,9 +9,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 pb-14 border-b border-white/5">
           {/* Col 1 — Logo + tagline */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-4">
-              <img src="/WebsiteLogo.png" alt="JSHub Logo" className="h-9" />
-              <span className="text-white font-extrabold tracking-widest text-lg">JSHub</span>
+            <div className="flex items-center gap-3 mb-5">
+              <img src="/WebsiteLogo.png" alt="JSHub Logo" className="h-14" />
+              <span className="text-white font-black tracking-widest text-4xl">JSHub</span>
             </div>
             <p className="text-white/40 text-sm leading-relaxed max-w-[240px]">
               Crafting distinguished digital experiences for modern brands and ambitious startups.

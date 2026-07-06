@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // ── Small icon set used inside project descriptions (no emojis) ──────────────
@@ -591,6 +591,8 @@ const ProjectDescription = ({ description, accent }) => (
 
 const ProjectDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
   const project = projectData[id];
 
   // Scroll to top on mount
@@ -608,34 +610,62 @@ const ProjectDetail = () => {
   }
 
   const accent = project.accent || '#00E5FF';
+  const [showSubNav, setShowSubNav] = useState(true);
+  const lastScrollY = React.useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        setShowSubNav(false);
+      } else if (currentScrollY < lastScrollY.current) {
+        setShowSubNav(true);
+      }
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <motion.div
+    <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen bg-[#0f1114] text-white"
+      className="min-h-screen bg-transparent text-white"
     >
-      {/* Simple Header */}
-      <header className="fixed top-0 w-full z-50 bg-[#12151a]/90 backdrop-blur-2xl border-b border-white/5 px-6 py-4 flex items-center justify-between">
-        <Link
-          to="/#portfolio"
-          className="flex items-center gap-2 text-white/50 hover:text-white transition-colors text-sm font-semibold tracking-wider"
-        >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Back to Portfolio
-        </Link>
-        <div className="text-right">
-          <p className="text-[10px] tracking-[0.2em] uppercase font-bold" style={{ color: accent }}>{project.category}</p>
-          <h1 className="text-lg font-bold tracking-wide">{project.title}</h1>
-        </div>
-      </header>
-
       {/* Full-width image carousel */}
-      <main className="pt-[72px]">
+      <main className="pt-[130px]">
+        {/* Secondary Sub-Navbar that hides behind the main header on scroll down, and shows on scroll up */}
+        <div 
+          className={`fixed top-[72px] left-0 w-full z-40 bg-[#12151a]/30 backdrop-blur-md border-b border-white/5 px-6 sm:px-12 py-3.5 flex items-center justify-between transition-transform duration-500 ease-in-out ${
+            showSubNav ? 'translate-y-0' : '-translate-y-full'
+          }`}
+        >
+          <button
+            onClick={() => {
+              if (location.state?.from === 'all-projects') {
+                navigate('/projects');
+              } else {
+                navigate('/#portfolio');
+              }
+            }}
+            className="flex items-center gap-2 text-white/50 hover:text-white transition-colors text-[11px] font-bold tracking-[0.2em] uppercase"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back
+          </button>
+          <div className="flex items-center gap-4">
+            <p className="text-[10px] tracking-[0.2em] uppercase font-bold hidden sm:block" style={{ color: accent }}>{project.category}</p>
+            <div className="w-1 h-4 rounded-full sm:hidden" style={{ backgroundColor: accent }}></div>
+            <h1 className="text-sm font-black tracking-widest uppercase text-white/90">{project.title}</h1>
+          </div>
+        </div>
+
         <ImageCarousel images={project.screenshots} title={project.title} accent={accent} />
 
         {/* Structured description, when available */}
@@ -647,13 +677,9 @@ const ProjectDetail = () => {
           </div>
         )}
 
-        <div className="flex justify-center pb-20">
-          <Link
-            to="/#portfolio"
-            className="px-8 py-4 bg-white/5 hover:bg-white/10 rounded-xl text-white font-bold tracking-widest text-sm transition-colors border border-white/10"
-          >
-            ← Back to Portfolio
-          </Link>
+        <div className="flex flex-col items-center justify-center pb-24 pt-10 opacity-40 select-none pointer-events-none">
+          <div className="w-1.5 h-1.5 rounded-full mb-6" style={{ backgroundColor: accent }}></div>
+          <p className="text-[10px] tracking-[0.5em] uppercase font-bold text-white">End of Project</p>
         </div>
       </main>
     </motion.div>

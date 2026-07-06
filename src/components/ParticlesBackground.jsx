@@ -38,7 +38,8 @@ const ParticlesBackground = ({ count = 4000 }) => {
       originalPositions[i * 3 + 2] = z;
     }
     return [positions, originalPositions];
-  }, [count, viewport]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [count]);
 
   const circleTexture = useMemo(() => {
     const canvas = document.createElement('canvas');

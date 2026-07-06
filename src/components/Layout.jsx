@@ -1,6 +1,6 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import Navbar from './Navbar';
+import Header from './Header';
 import ParticlesBackground from './ParticlesBackground';
 
 const Layout = ({ children }) => {
@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
         </Canvas>
       </div>
 
-      <Navbar />
+        <Header />
       <main className="w-full relative z-10">
         {children}
       </main>
