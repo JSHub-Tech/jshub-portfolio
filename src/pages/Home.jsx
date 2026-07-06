@@ -36,9 +36,9 @@ export default function Home() {
       <MarqueeTicker />
       <FeaturedProjects />
       <Testimonials />
-      <Team />
       <ContactCTA />
       <ContactSection />
+      <Team />
       <Footer />
     </Layout>
   );
