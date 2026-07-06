@@ -36,6 +36,7 @@ const ProjectCard = ({ project, index }) => {
   return (
     <Link 
       to={`/project/${project.id}`} 
+      state={{ from: 'home' }}
       className={`group relative rounded-3xl overflow-hidden cursor-pointer bg-[#1D2024] flex-shrink-0 w-[85vw] sm:w-[60vw] h-[320px] snap-center md:w-auto md:h-auto md:flex-shrink md:snap-none ${project.size} block`}
     >
       <motion.div 
@@ -98,7 +99,7 @@ const ProjectCard = ({ project, index }) => {
 
 const FeaturedProjects = () => {
   return (
-    <section id="portfolio" className="min-h-screen px-0 sm:px-8 lg:px-24 py-24 sm:py-32 border-t border-white/5 bg-[#0f1114]">
+    <section id="portfolio" className="min-h-screen px-0 sm:px-8 lg:px-24 py-24 sm:py-32 border-t border-white/5 bg-transparent">
       <div className="max-w-[1400px] mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
@@ -127,10 +128,10 @@ const FeaturedProjects = () => {
           viewport={{ once: false }}
           className="flex justify-center mt-12"
         >
-          <button className="px-8 py-3 rounded-xl border border-white/10 text-white/60 text-sm font-bold tracking-wider hover:text-white hover:border-white/30 transition-all duration-300 flex items-center gap-2 group">
+          <Link to="/projects" className="px-8 py-3 rounded-xl border border-white/10 text-white/60 text-sm font-bold tracking-wider hover:text-white hover:border-white/30 transition-all duration-300 flex items-center gap-2 group">
             VIEW ALL WORK
             <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>

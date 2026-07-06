@@ -39,6 +39,16 @@
     border: none;
   }
 
+  /* Custom Text Selection */
+  ::selection {
+    background-color: #00E5FF;
+    color: #0f1114;
+  }
+  ::-moz-selection {
+    background-color: #00E5FF;
+    color: #0f1114;
+  }
+
   body {
     @apply text-[#EAEBED] m-0 p-0 font-sans;
     background-color: var(--bg-color-e);
