@@ -5,39 +5,30 @@ import { Link } from 'react-router-dom';
 const projects = [
   {
     id: 1,
-    title: 'Nexus Analytics',
-    category: 'Web Application',
-    description: 'A powerful real-time analytics dashboard with predictive AI modeling.',
+    title: 'SENTIX',
+    category: 'AI / ML Platform',
+    description: 'A sentiment-aware movie recommendation and social discovery platform built on a polyglot persistence architecture.',
     size: 'md:col-span-2 md:row-span-2', // Large square
-    bgImage: 'linear-gradient(135deg, #111827 0%, #0A66C2 100%)',
-    tags: ['React', 'D3.js', 'Node.js']
+    image: '/Projects/sentix/Sentix01.jpg',
+    tags: ['FastAPI', 'Neo4j', 'Recommendation Engine']
   },
   {
     id: 2,
-    title: 'FinTech Wallet',
-    category: 'Mobile App',
-    description: 'Secure, fast, and intuitive mobile wallet for modern crypto traders.',
+    title: 'AERO',
+    category: 'Database Systems',
+    description: 'A polyglot, self-healing airline backend combining ACID transactions, graph-based routing, and live telemetry.',
     size: 'md:col-span-1 md:row-span-1', // Small square
-    bgImage: 'linear-gradient(135deg, #1f2937 0%, #D32F2F 100%)',
-    tags: ['React Native', 'Web3']
+    image: '/Projects/aero/Aero01.jpeg',
+    tags: ['FastAPI', 'Neo4j', 'Redis']
   },
   {
     id: 3,
-    title: 'Aura E-Commerce',
-    category: 'E-Commerce',
-    description: 'Headless Shopify integration for a luxury streetwear brand.',
+    title: 'SAGE',
+    category: 'AI / ML Platform',
+    description: 'A multi-agent Retrieval-Augmented Generation assistant delivering grounded, domain-specific support for Samsung appliances.',
     size: 'md:col-span-1 md:row-span-1', // Small square
-    bgImage: 'linear-gradient(135deg, #111827 0%, #D9A01B 100%)',
-    tags: ['Next.js', 'Shopify']
-  },
-  {
-    id: 4,
-    title: 'Vanguard Corporate',
-    category: 'Web Design',
-    description: 'A complete brand refresh and website overhaul for a Fortune 500 tech firm.',
-    size: 'md:col-span-2 md:row-span-1', // Wide rectangle
-    bgImage: 'linear-gradient(135deg, #111827 0%, #00A896 100%)',
-    tags: ['Framer', 'Three.js']
+    image: '/Projects/sage/Sage01.jpeg',
+    tags: ['LangGraph', 'RAG', 'Multi-Agent']
   }
 ];
 
@@ -55,9 +46,17 @@ const ProjectCard = ({ project, index }) => {
         className="w-full h-full"
       >
         {/* Background Image / Gradient */}
-        <div 
+        <div
           className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
-          style={{ background: project.bgImage }}
+          style={
+            project.image
+              ? {
+                  backgroundImage: `url(${project.image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }
+              : { background: project.bgImage }
+          }
         />
         
         {/* Dark Overlay that reveals on hover */}

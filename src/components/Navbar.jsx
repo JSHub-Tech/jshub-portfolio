@@ -47,7 +47,7 @@ const Navbar = () => {
           className="flex items-center gap-3 group"
         >
           <img
-            src="/WebsiteLogo.png"
+            src="/WebsiteLogo.svg"
             alt="JSHub Logo"
             className="h-10 sm:h-11 transition-transform duration-300 group-hover:scale-105"
           />
