@@ -19,6 +19,24 @@
   
   html {
     background-color: var(--bg-color-e);
+    scroll-behavior: smooth;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0f1114;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1D2024;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00E5FF;
+    border: none;
   }
 
   body {

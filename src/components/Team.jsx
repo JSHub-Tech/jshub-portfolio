@@ -6,7 +6,7 @@ const TeamMember = ({ name, role, description, color, index }) => {
     <motion.div 
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={{ once: false, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
       className="flex flex-col items-center text-center group cursor-pointer"
     >
@@ -54,7 +54,7 @@ const Team = () => {
         <motion.h2 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.6 }}
           className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-14 sm:mb-24 text-center tracking-widest text-white/90"
         >

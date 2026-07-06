@@ -45,7 +45,7 @@ const Testimonials = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
@@ -59,7 +59,7 @@ const Testimonials = () => {
               key={i}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
+              viewport={{ once: false, margin: '-60px' }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
               className="relative group p-8 rounded-3xl bg-[#1D2024]/80 border border-white/5 hover:border-white/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden"
             >

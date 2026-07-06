@@ -1,6 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+const scrollToContact = (e) => {
+  e.preventDefault();
+  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
 const ContactCTA = () => {
   return (
     <section className="border-t border-white/5 bg-[#1A1D21] px-8 lg:px-24 py-32 relative overflow-hidden">
@@ -20,7 +25,7 @@ const ContactCTA = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.5 }}
           className="text-accent-red text-sm tracking-[0.35em] uppercase font-semibold mb-6"
         >
@@ -30,7 +35,7 @@ const ContactCTA = () => {
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-5xl lg:text-7xl font-extrabold mb-6 leading-tight tracking-tight"
         >
@@ -45,7 +50,7 @@ const ContactCTA = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-white/50 text-lg mb-12 max-w-2xl mx-auto leading-relaxed"
         >
@@ -56,19 +61,21 @@ const ContactCTA = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <a
-            href="mailto:contact@jshubagency.com"
+            href="#contact"
+            onClick={scrollToContact}
             className="group relative px-10 py-4 rounded-xl font-bold tracking-wider text-sm overflow-hidden bg-accent-red text-white transition-all duration-300 hover:shadow-[0_0_40px_rgba(211,47,47,0.5)] hover:scale-105"
           >
             <span className="relative z-10">START YOUR PROJECT →</span>
           </a>
 
           <a
-            href="mailto:contact@jshubagency.com"
+            href="#contact"
+            onClick={scrollToContact}
             className="px-10 py-4 rounded-xl font-bold tracking-wider text-sm border border-white/15 text-white/70 hover:border-accent-cyan/50 hover:text-accent-cyan transition-all duration-300"
           >
             GET IN TOUCH
@@ -79,7 +86,7 @@ const ContactCTA = () => {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-16 flex flex-wrap justify-center gap-8 text-sm text-white/30"
         >
@@ -87,7 +94,7 @@ const ContactCTA = () => {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
             </svg>
-            contact@jshubagency.com
+            jshubdigital@gmail.com
           </span>
           <span className="flex items-center gap-2">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
