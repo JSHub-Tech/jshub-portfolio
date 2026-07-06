@@ -306,7 +306,8 @@ const projectData = {
       '/Projects/sage/Sage04.jpeg',
       '/Projects/sage/Sage05.jpeg',
       '/Projects/sage/Sage06.jpeg',
-      '/Projects/sage/Sage07.jpeg'
+      '/Projects/sage/Sage07.jpeg',
+      '/Projects/sage/Sage08.jpeg'
     ],
     description: {
       tagline: 'A multi-agent Retrieval-Augmented Generation assistant delivering grounded, domain-specific support for Samsung appliances.',
