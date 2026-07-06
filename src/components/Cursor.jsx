@@ -2,45 +2,50 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const Cursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 });
 
   useEffect(() => {
-    const mouseMove = (e) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY
-      });
-    };
-    window.addEventListener("mousemove", mouseMove);
-    return () => window.removeEventListener("mousemove", mouseMove);
-  }, []);
+    document.body.style.cursor = 'none';
 
-  const variants = {
-    default: {
-      x: mousePosition.x - 16,
-      y: mousePosition.y - 16,
-      transition: { type: "spring", mass: 0.1, stiffness: 800, damping: 20 }
-    }
-  };
+    const mouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', mouseMove);
+    return () => {
+      document.body.style.cursor = 'auto';
+      window.removeEventListener('mousemove', mouseMove);
+    };
+  }, []);
 
   return (
     <div className="hidden lg:block">
-      {/* The trailing soft glow */}
+      {/* Custom arrow cursor — SVG pointer shape, cyan colored */}
       <motion.div
-        className="fixed top-0 left-0 w-32 h-32 bg-accent-cyan/10 rounded-full blur-3xl pointer-events-none z-50"
+        className="fixed top-0 left-0 pointer-events-none z-[9999]"
         animate={{
-            x: mousePosition.x - 64,
-            y: mousePosition.y - 64,
-            transition: { type: "tween", ease: "backOut", duration: 0.5 }
+          x: mousePosition.x,
+          y: mousePosition.y,
         }}
-      />
-      {/* The sharp glowing dot */}
-      <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-accent-cyan/40 backdrop-blur-sm pointer-events-none z-[100] flex items-center justify-center shadow-[0_0_15px_rgba(0,229,255,0.3)]"
-        variants={variants}
-        animate="default"
+        transition={{ type: 'tween', duration: 0.01 }}
       >
-          <div className="w-1.5 h-1.5 bg-accent-cyan rounded-full shadow-[0_0_10px_#00E5FF]"></div>
+        <svg
+          width="24"
+          height="28"
+          viewBox="0 0 24 28"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ display: 'block', filter: 'drop-shadow(0 0 6px rgba(0,229,255,0.8))' }}
+        >
+          {/* Arrow pointer shape — same as the default OS cursor but cyan */}
+          <path
+            d="M2 2L2 22L7.5 16.5L12.5 26L15.5 24.5L10.5 14.5L18 14.5L2 2Z"
+            fill="#00E5FF"
+            stroke="#003840"
+            strokeWidth="1.2"
+            strokeLinejoin="round"
+          />
+        </svg>
       </motion.div>
     </div>
   );

@@ -42,10 +42,10 @@ const TeamMember = ({ name, role, description, color, index }) => {
 const Team = () => {
   const team = [
     { name: 'Muhammad Umer', role: 'CEO', description: 'Leads JSHub Agency\'s vision and strategy, driving innovation and growth across every project.', color: '#00E5FF' },
-    { name: 'Saad Asif', role: 'Founder', description: 'Founded JSHub Agency with a passion for crafting impactful digital experiences from the ground up.', color: '#D32F2F' },
-    { name: 'Jamal Matloob', role: 'Co-Founder', description: 'Co-founded JSHub Agency, shaping its culture and technical direction alongside the founding team.', color: '#D9A01B' },
+    { name: 'Jamal Matloob', role: 'Founder', description: 'Founded JSHub Agency with a vision to craft impactful digital experiences and lead the next generation of web innovation.', color: '#D9A01B' },
     { name: 'Khawaja Bilal', role: 'Software Developer', description: 'Builds and maintains robust, scalable software solutions that power our clients\' digital products.', color: '#00A896' },
-    { name: 'Hassan Raza', role: 'Manager', description: 'Oversees project execution and client relationships, ensuring every delivery meets the highest standard.', color: '#00A3C1' }
+    { name: 'Hassan Raza', role: 'Manager', description: 'Oversees project execution and client relationships, ensuring every delivery meets the highest standard.', color: '#00A3C1' },
+    { name: 'Saad Asif', role: 'Web Developer', description: 'Designs and develops modern, responsive web experiences with a focus on clean code and user experience.', color: '#D32F2F' },
   ];
 
   return (
