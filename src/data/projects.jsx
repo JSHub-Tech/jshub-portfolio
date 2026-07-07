@@ -378,6 +378,87 @@ export const projectDetails = {
       stack: ['React', 'Vite', 'FastAPI', 'LangGraph', 'Gemini', 'Llama 3.1', 'ChromaDB', 'SQLite', 'BM25', 'RAGAS'],
     },
   },
+  4: {
+    title: 'HOME ESTATE',
+    category: 'Real Estate Platform',
+    accent: '#F59E0B',
+    screenshots: [
+      '/Projects/home_estate/home01.png',
+      '/Projects/home_estate/home02.png',
+      '/Projects/home_estate/home03.png',
+      '/Projects/home_estate/home04.png',
+      '/Projects/home_estate/home05.png'
+    ],
+    description: {
+      tagline: 'A comprehensive real estate platform driven purely by custom Data Structures and Algorithms for property search, navigation, and procedural floor plan generation.',
+      overview: "HomeEstate addresses the inefficiencies of traditional property search and architectural planning by relying entirely on custom Data Structures and Algorithms (DSA) without external APIs. It utilizes an AVL tree for O(log n) range-based property searching, Min/Max Heaps for O(1) retrieval of featured deals, and Dijkstra's algorithm over a geospatial graph for road navigation. Additionally, a Binary Space Partitioning (BSP) algorithm recursively generates structurally valid, randomized floor plans based on user constraints. The Django backend operates its DSA structures entirely in-memory for instant data access.",
+      architectureTitle: 'System Architecture & Data Structures',
+      architectureIcon: Icon.layers,
+      architecture: [
+        {
+          name: 'AVL Tree',
+          icon: Icon.database,
+          role: 'Guarantees O(log n) search and insertion time for range-based filtering on property Price and Size without degrading performance.',
+        },
+        {
+          name: 'Min/Max Heaps',
+          icon: Icon.trend,
+          role: 'Provides O(1) constant time access to the absolute cheapest and largest properties for the featured dashboard.',
+        },
+        {
+          name: 'Location Graph',
+          icon: Icon.network,
+          role: 'Represents the physical road network, properties, and facilities. Uses an adjacency list to power shortest-path navigation.',
+        },
+        {
+          name: 'BSP Tree',
+          icon: Icon.cluster,
+          role: 'Recursively divides plot space to procedurally generate unique, structurally valid room layouts based on dimensional constraints.',
+        },
+      ],
+      engineTitle: 'Core Algorithmic Operations',
+      engineIcon: Icon.compass,
+      engine: [
+        {
+          title: 'Shortest Path Navigation',
+          icon: Icon.target,
+          strategy: 'Dijkstra\'s Algorithm with a Priority Queue.',
+          points: [
+            'Calculates edge weights between properties and road nodes using the real-world Haversine formula.',
+            'Explores the graph to find the optimal route from a house to the nearest facility, returning the route with the smallest accumulated distance.',
+          ],
+        },
+        {
+          title: 'Range-Based Property Search',
+          icon: Icon.shield,
+          strategy: 'In-memory AVL Tree traversal.',
+          points: [
+            'Intelligently prunes the search space by moving only to the left or right child based on price bounds.',
+            'Bypasses the database entirely to return filtered properties in guaranteed O(log n) time.',
+          ],
+        },
+        {
+          title: 'Procedural House Generation',
+          icon: Icon.layers,
+          strategy: 'Binary Space Partitioning with BFS validation.',
+          points: [
+            'Normalizes plot dimensions and uses a randomized BSP algorithm to recursively split space into functional rooms.',
+            'Converts geometric nodes into a logical connectivity graph and uses Breadth-First Search to ensure all rooms are reachable from the main entrance.',
+          ],
+        },
+        {
+          title: 'In-Memory Data Management',
+          icon: Icon.bolt,
+          strategy: 'Real-time state synchronization via Django Signals.',
+          points: [
+            'Maintains all Trees, Heaps, and Graphs in active memory for instant querying.',
+            'Automatically triggers data structure updates (heapify, AVL rotations, graph disconnection) whenever a property is added, edited, or deleted.',
+          ],
+        },
+      ],
+      stack: ['React', 'Vite', 'Django REST Framework', 'SQLite', 'Leaflet', 'Tailwind CSS'],
+    },
+  },
 };
 
 // Summary project list used for the Home and All Projects grids
@@ -399,6 +480,15 @@ export const projectsList = [
     size: 'md:col-span-1 md:row-span-1', // Small square
     image: '/Projects/aero/Aero01.jpeg',
     tags: ['FastAPI', 'Neo4j', 'Redis']
+  },
+  {
+    id: 4,
+    title: 'HOME ESTATE',
+    category: 'Real Estate Platform',
+    description: 'A comprehensive real estate platform driven purely by custom Data Structures and Algorithms for search, navigation, and floor plan generation.',
+    size: 'md:col-span-1 md:row-span-1', 
+    image: '/Projects/home_estate/home01.png',
+    tags: ['Real Estate']
   },
   {
     id: 3,
