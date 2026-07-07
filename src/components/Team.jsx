@@ -41,11 +41,7 @@ const TeamMember = ({ name, role, description, color, index }) => {
         />
       </div>
       
-      <h3 className="text-2xl font-bold text-white mb-1 tracking-wide">{name}</h3>
-      <p className="text-sm font-semibold mb-3 tracking-wider" style={{ color }}>{role}</p>
-      <p className="text-white/40 text-sm max-w-[220px] leading-relaxed">
-        {description}
-      </p>
+      <h3 className="text-2xl font-bold text-white tracking-wide">{name}</h3>
     </motion.div>
   );
 };
@@ -69,7 +65,7 @@ const Team = () => {
           transition={{ duration: 0.6 }}
           className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-14 sm:mb-24 text-center tracking-widest text-white/90"
         >
-          OUR VISIONARY TEAM
+          OUR TEAM
         </motion.h2>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 sm:gap-12">
