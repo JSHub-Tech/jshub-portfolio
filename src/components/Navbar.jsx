@@ -62,7 +62,7 @@ const Navbar = () => {
         </a>
 
         {/* ── Desktop nav links ── */}
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-1">
           {navLinks.map((link) => {
             const isActive = activeSection === link.id;
             return (
@@ -96,7 +96,7 @@ const Navbar = () => {
         </div>
 
         {/* ── CTA button (desktop) ── */}
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <a
             href="/#contact"
             className="px-6 py-2.5 rounded-lg text-[12px] font-bold tracking-[0.15em] uppercase border border-accent-red/60 text-accent-red hover:bg-accent-red hover:text-white hover:border-accent-red hover:shadow-[0_0_20px_rgba(211,47,47,0.4)] transition-all duration-300"
@@ -110,7 +110,7 @@ const Navbar = () => {
           type="button"
           aria-label="Toggle menu"
           onClick={() => setMenuOpen(prev => !prev)}
-          className="md:hidden flex flex-col items-center justify-center gap-[5px] w-9 h-9 text-white/80"
+          className="lg:hidden flex flex-col items-center justify-center gap-[5px] w-9 h-9 text-white/80"
         >
           <span className={`block w-6 h-0.5 bg-current rounded-full transition-all duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`} />
           <span className={`block w-6 h-0.5 bg-current rounded-full transition-all duration-300 ${menuOpen ? 'opacity-0 scale-x-0' : ''}`} />
@@ -120,7 +120,7 @@ const Navbar = () => {
 
       {/* ── Mobile dropdown ── */}
       <div
-        className={`md:hidden bg-[#12151a]/98 backdrop-blur-2xl border-b border-white/5 overflow-hidden transition-all duration-300 ${
+        className={`lg:hidden bg-[#12151a]/98 backdrop-blur-2xl border-b border-white/5 overflow-hidden transition-all duration-300 ${
           menuOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
         }`}
       >
