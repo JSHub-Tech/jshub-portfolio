@@ -7,7 +7,7 @@ import Stats from '../components/Stats';
 import MarqueeTicker from '../components/MarqueeTicker';
 import FeaturedProjects from '../components/FeaturedProjects';
 import Testimonials from '../components/Testimonials';
-import Team from '../components/Team';
+import About from '../components/About';
 import ContactCTA from '../components/ContactCTA';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
@@ -35,9 +35,9 @@ export default function Home() {
       <MarqueeTicker />
       <FeaturedProjects />
       <Testimonials />
+      <About />
       <ContactCTA />
       <ContactSection />
-      <Team />
       <Footer />
     </>
   );

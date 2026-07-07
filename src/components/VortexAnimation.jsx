@@ -14,16 +14,16 @@ const OrbitNode = ({ ringRotation, radius, color, speed, size }) => {
 
   return (
     <group rotation={ringRotation}>
-      {/* Removed depthTest={false} so they properly hide behind the planet */}
+      {/* Made the rings opaque. This forces the 3D engine to properly hide them behind the planet. */}
       <mesh>
         <torusGeometry args={[radius, 0.015, 16, 100]} />
-        <meshBasicMaterial color={color} transparent opacity={0.4} />
+        <meshBasicMaterial color={color} depthTest={true} depthWrite={true} />
       </mesh>
       
       <group ref={moonGroupRef}>
         <mesh position={[radius, 0, 0]}>
           <sphereGeometry args={[size, 16, 16]} />
-          <meshBasicMaterial color={color} />
+          <meshBasicMaterial color={color} depthTest={true} depthWrite={true} />
         </mesh>
       </group>
     </group>
@@ -42,11 +42,22 @@ const OrbitRings = () => {
 
 const LogoPlanet = () => {
   const texture = useTexture('/WebsiteLogo.png');
+  
+  // Genius trick: We clone the logo texture, zoom in on the top-left pixel (which is the solid background color),
+  // and wrap that exact color around the entire ball. This guarantees a 100% flawless color match!
+  const bgTexture = React.useMemo(() => {
+    const clone = texture.clone();
+    clone.repeat.set(0.01, 0.01);
+    clone.offset.set(0.05, 0.95);
+    clone.needsUpdate = true;
+    return clone;
+  }, [texture]);
+
   const sphereRef = useRef();
 
   useFrame((state, delta) => {
     if (sphereRef.current) {
-      sphereRef.current.rotation.y += delta * 0.15; // slightly faster spin
+      sphereRef.current.rotation.y += delta * 0.15;
     }
   });
 
@@ -54,31 +65,24 @@ const LogoPlanet = () => {
     <Float speed={1.5} floatIntensity={0.5} rotationIntensity={0}>
       <mesh ref={sphereRef}>
         <sphereGeometry args={[2.2, 64, 64]} />
-        {/* Lighter brushed metal core */}
+        
+        {/* Ball uses the exact background color from the image */}
         <meshStandardMaterial 
-          color="#333333" 
-          roughness={0.2} 
-          metalness={0.6} 
+          map={bgTexture} 
+          roughness={0.4} 
+          metalness={0.5} 
         />
         
-        {/* Placed the logo 4 times around the equator to give an engraved/stamped feel */}
-        
-        {/* Front */}
+        {/* Logo pasted 4 times around the equator. Matching roughness and metalness ensures it blends seamlessly. */}
         <Decal position={[0, 0, 2.2]} rotation={[0, 0, 0]} scale={[2, 2, 2]}>
           <meshStandardMaterial map={texture} roughness={0.4} metalness={0.5} polygonOffset polygonOffsetFactor={-1} />
         </Decal>
-        
-        {/* Back */}
         <Decal position={[0, 0, -2.2]} rotation={[0, Math.PI, 0]} scale={[2, 2, 2]}>
           <meshStandardMaterial map={texture} roughness={0.4} metalness={0.5} polygonOffset polygonOffsetFactor={-1} />
         </Decal>
-        
-        {/* Right */}
         <Decal position={[2.2, 0, 0]} rotation={[0, Math.PI / 2, 0]} scale={[2, 2, 2]}>
           <meshStandardMaterial map={texture} roughness={0.4} metalness={0.5} polygonOffset polygonOffsetFactor={-1} />
         </Decal>
-        
-        {/* Left */}
         <Decal position={[-2.2, 0, 0]} rotation={[0, -Math.PI / 2, 0]} scale={[2, 2, 2]}>
           <meshStandardMaterial map={texture} roughness={0.4} metalness={0.5} polygonOffset polygonOffsetFactor={-1} />
         </Decal>
@@ -92,18 +96,17 @@ const LogoPlanet = () => {
 
 const VortexAnimation = () => {
   return (
-    // Changed to w-[120%] to give it a little more breathing room, preventing the CSS box from clipping the rings
     <div className="relative w-full lg:w-[120%] lg:-ml-[10%] aspect-square select-none cursor-grab active:cursor-grabbing">
       <Canvas>
-        {/* Pulled camera back from 9 to 11.5 to stop the rings from hitting the edges */}
         <PerspectiveCamera makeDefault position={[0, 0, 11.5]} fov={45} />
         
         <OrbitControls enableZoom={false} enablePan={false} autoRotate={false} />
         
-        <ambientLight intensity={0.8} />
+        {/* Boosted ambient light to make the planet even brighter */}
+        <ambientLight intensity={1.2} />
         <directionalLight position={[5, 5, 5]} intensity={2.5} color="#ffffff" />
-        <directionalLight position={[-5, -5, -5]} intensity={1} color="#00E5FF" />
-        <pointLight position={[0, 5, -5]} intensity={2} color="#D32F2F" />
+        <directionalLight position={[-5, -5, -5]} intensity={1.5} color="#00E5FF" />
+        <pointLight position={[0, 5, -5]} intensity={2.5} color="#D32F2F" />
         
         <LogoPlanet />
       </Canvas>
