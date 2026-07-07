@@ -1,9 +1,9 @@
 import React from 'react';
-import { FaLinkedinIn, FaInstagram, FaXTwitter, FaTiktok, FaYoutube, FaWhatsapp } from 'react-icons/fa6';
+import { FaLinkedinIn, FaInstagram, FaXTwitter, FaTiktok, FaYoutube, FaWhatsapp, FaFacebookF } from 'react-icons/fa6';
 
 const Footer = () => {
   return (
-    <footer className="border-t border-white/10 bg-transparent px-6 sm:px-8 lg:px-24 pt-16 pb-8">
+    <footer id="footer" className="border-t border-white/10 bg-transparent px-6 sm:px-8 lg:px-24 pt-16 pb-8">
       <div className="max-w-[1400px] mx-auto">
         {/* Top grid — 4 columns */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 pb-14 border-b border-white/5">
@@ -77,6 +77,7 @@ const Footer = () => {
             <div className="flex gap-2.5">
               {[
                 { label: 'LinkedIn',         href: 'https://linkedin.com/company/jshub',                        icon: <FaLinkedinIn size={18}/>, hoverBg: '#0A66C2' },
+                { label: 'Facebook',         href: 'https://www.facebook.com/jshubbb',                          icon: <FaFacebookF  size={18}/>, hoverBg: '#1877F2' },
                 { label: 'Instagram',        href: 'https://instagram.com/_jshub',                             icon: <FaInstagram  size={18}/>, hoverBg: 'linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)' },
                 { label: 'X (Twitter)',      href: 'https://x.com/_jshub',                                     icon: <FaXTwitter   size={18}/>, hoverBg: '#000000' },
                 { label: 'TikTok',           href: 'https://tiktok.com/@__jshub',                             icon: <FaTiktok     size={18}/>, hoverBg: '#010101' },
