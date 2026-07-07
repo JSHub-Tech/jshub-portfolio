@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 
 // Mock data for projects — you can replace the screenshot URLs here later.
 const projectData = {
@@ -51,6 +52,11 @@ const ProjectDetail = () => {
   if (!project) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#0f1114] text-white">
+        <SEO
+          title="Project Not Found | JSHub Agency"
+          description="The project you're looking for doesn't exist or may have been moved."
+          path={`/project/${id}`}
+        />
         <h1 className="text-3xl font-bold mb-4">Project Not Found</h1>
         <Link to="/" className="text-accent-cyan hover:underline">Return to Home</Link>
       </div>
@@ -65,6 +71,13 @@ const ProjectDetail = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen bg-[#0f1114] text-white"
     >
+      <SEO
+        title={`${project.title} | JSHub Agency Projects`}
+        description={`${project.title} — a ${project.category} project by JSHub Agency.`}
+        path={`/project/${id}`}
+        image={project.screenshots?.[0]}
+      />
+
       {/* Simple Header */}
       <header className="fixed top-0 w-full z-50 bg-[#12151a]/90 backdrop-blur-2xl border-b border-white/5 px-6 py-4 flex items-center justify-between">
         <Link 

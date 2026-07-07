@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 import Hero from '../components/Hero';
 import Services from '../components/Services';
 import Stats from '../components/Stats';
@@ -16,7 +17,6 @@ export default function Home() {
   const { hash } = useLocation();
 
   useEffect(() => {
-    document.title = 'JSHub | Premium Digital Agency';
     if (hash) {
       setTimeout(() => {
         const element = document.getElementById(hash.replace('#', ''));
@@ -29,6 +29,11 @@ export default function Home() {
 
   return (
     <>
+      <SEO
+        title="JSHub Agency | Premium Web & Mobile Development"
+        description="JSHub is a premium digital agency engineering scalable web applications, mobile apps, video editing, and UI/UX design to accelerate your business growth."
+        path="/"
+      />
       <Hero />
       <Services />
       <Stats />

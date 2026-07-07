@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="google-site-verification" content="sMeekm9UaDiBcTI5eLuiBrhOyB6I5W4tkmcSB7Hvw4g" />
     <link rel="icon" type="image/png" href="/WebsiteLogo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
@@ -23,6 +24,36 @@
     <meta name="twitter:title" content="JSHub Agency | Premium Digital Solutions" />
     <meta name="twitter:description" content="Engineering scalable web applications, mobile apps, and stunning UI/UX design to accelerate your business." />
     <meta name="twitter:image" content="/WebsiteLogo.png" />
+
+    <!-- Canonical (static fallback; react-helmet-async overrides per-route at runtime) -->
+    <link rel="canonical" href="https://jshub.agency/" />
+
+    <!-- Organization structured data: site-wide, so it lives here rather than
+         in a per-page <Helmet>. sameAs URLs pulled from Footer.jsx. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "JSHub Agency",
+      "url": "https://jshub.agency/",
+      "logo": "https://jshub.agency/WebsiteLogo.png",
+      "email": "jshubdigital@gmail.com",
+      "telephone": "+92-310-618-2610",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lahore",
+        "addressCountry": "PK"
+      },
+      "sameAs": [
+        "https://linkedin.com/company/jshub",
+        "https://www.facebook.com/jshubbb",
+        "https://instagram.com/_jshub",
+        "https://x.com/_jshub",
+        "https://tiktok.com/@__jshub",
+        "https://www.youtube.com/@jshub.digital"
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
