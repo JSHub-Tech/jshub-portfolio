@@ -23,10 +23,10 @@ const AnimatedCounter = ({ target, suffix = '' }) => {
 // ── Stats Section ─────────────────────────────────────────────────────────────
 const Stats = () => {
   const stats = [
-    { value: 25,  suffix: '+',  label: 'Projects Delivered',   color: '#00E5FF' },
-    { value: 10,  suffix: '+',  label: 'Happy Clients',         color: '#D32F2F' },
-    { value: 5,   suffix: '',    label: 'Core Experts',   color: '#D9A01B' },
-    { value: 100, suffix: '%',  label: 'Client Satisfaction',   color: '#00A896' },
+    { value: 50,  suffix: 'ms', label: 'Avg Query Latency',    color: '#00E5FF' },
+    { value: 5,   suffix: 'M+', label: 'Nodes Traversed/Sec',  color: '#D32F2F' },
+    { value: 100, suffix: '%',  label: 'ACID Compliance',      color: '#D9A01B' },
+    { value: 100, suffix: '%',  label: 'Type-Safe Codebases',  color: '#00A896' },
   ];
 
   return (

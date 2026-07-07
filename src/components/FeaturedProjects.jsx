@@ -88,7 +88,7 @@ const FeaturedProjects = () => {
         
         {/* Mobile: horizontal scroll. Desktop: Masonry-style Bento Grid */}
         <div className="flex md:grid md:grid-cols-3 md:auto-rows-[300px] gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory px-8 sm:px-0 pb-8 scrollbar-hide">
-          {projects.map((project, index) => (
+          {projects.slice(0, 3).map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>
