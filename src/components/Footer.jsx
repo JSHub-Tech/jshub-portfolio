@@ -10,7 +10,7 @@ const Footer = () => {
           {/* Col 1 — Logo + tagline */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-5">
-              <img src="/WebsiteLogo.png" alt="JSHub Logo" className="h-14" />
+              <img src="/WebsiteLogo.svg" alt="JSHub Logo" className="h-14" />
               <span className="text-white font-black tracking-widest text-4xl">JSHub</span>
             </div>
             <p className="text-white/40 text-sm leading-relaxed max-w-[240px]">
