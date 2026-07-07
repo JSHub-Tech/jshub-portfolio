@@ -31,8 +31,17 @@ const OrbitNode = ({ ringRotation, radius, color, speed, size }) => {
 };
 
 const OrbitRings = () => {
+  const groupRef = useRef();
+  
+  useFrame((state, delta) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += delta * 0.15;
+      groupRef.current.rotation.z += delta * 0.05;
+    }
+  });
+
   return (
-    <group>
+    <group ref={groupRef}>
       <OrbitNode ringRotation={[Math.PI / 2, 0, 0]} radius={3.2} color="#00E5FF" speed={0.8} size={0.08} />
       <OrbitNode ringRotation={[Math.PI / 3, Math.PI / 4, 0]} radius={3.8} color="#D9A01B" speed={0.5} size={0.1} />
       <OrbitNode ringRotation={[-Math.PI / 3, -Math.PI / 4, 0]} radius={4.4} color="#D32F2F" speed={0.3} size={0.06} />
@@ -63,6 +72,7 @@ const LogoPlanet = () => {
 
   return (
     <Float speed={1.5} floatIntensity={0.5} rotationIntensity={0}>
+      <group scale={0.75}>
       <mesh ref={sphereRef}>
         <sphereGeometry args={[2.2, 64, 64]} />
         
@@ -90,6 +100,7 @@ const LogoPlanet = () => {
       </mesh>
       
       <OrbitRings />
+      </group>
     </Float>
   );
 };

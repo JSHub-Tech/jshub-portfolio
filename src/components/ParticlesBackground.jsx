@@ -2,7 +2,7 @@ import React, { useRef, useMemo, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
-const ParticlesBackground = ({ count = 4000 }) => {
+const ParticlesBackground = ({ count = 1200 }) => {
   const mesh = useRef();
   const { viewport } = useThree();
   const targetMousePos = useRef(new THREE.Vector2(0, 0));
@@ -22,12 +22,12 @@ const ParticlesBackground = ({ count = 4000 }) => {
     const positions = new Float32Array(count * 3);
     const originalPositions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      const z = Math.random() * 40 - 35; // Distribute evenly from z=-35 to z=5
-      const scale = (5 - z) / 5;
+      const z = Math.random() * 30 - 35; // Distribute evenly from z=-35 to z=-5
+      const distance = 11.5 - z; // Camera is at z=11.5
       
-      // Spawn particles so they cover the exact visual size of the screen at their specific depth
-      const x = (Math.random() - 0.5) * viewport.width * scale * 1.5;
-      const y = (Math.random() - 0.5) * viewport.height * scale * 1.5;
+      // Use fixed multipliers based on distance to avoid stale viewport size on initial render
+      const x = (Math.random() - 0.5) * distance * 2.5;
+      const y = (Math.random() - 0.5) * distance * 1.5;
 
       positions[i * 3] = x;
       positions[i * 3 + 1] = y;
@@ -38,7 +38,6 @@ const ParticlesBackground = ({ count = 4000 }) => {
       originalPositions[i * 3 + 2] = z;
     }
     return [positions, originalPositions];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 
   const circleTexture = useMemo(() => {
@@ -74,12 +73,12 @@ const ParticlesBackground = ({ count = 4000 }) => {
 
       pz += 0.015;
       
-      // If it passes the camera, respawn it at the far back with completely new random coordinates!
-      if (pz > 5) {
+      // If it gets too close to the screen, respawn it at the far back!
+      if (pz > -5) {
         pz = -35;
-        const scale = (5 - pz) / 5; // Scale at depth -35 is 8
-        px = ox = (Math.random() - 0.5) * viewport.width * scale * 1.5;
-        py = oy = (Math.random() - 0.5) * viewport.height * scale * 1.5;
+        const distance = 11.5 - pz;
+        px = ox = (Math.random() - 0.5) * distance * 2.5;
+        py = oy = (Math.random() - 0.5) * distance * 1.5;
         posArray[idx] = px;
         posArray[idx + 1] = py;
         originalPositions[idx] = ox;
@@ -88,7 +87,7 @@ const ParticlesBackground = ({ count = 4000 }) => {
       
       posArray[idx + 2] = pz;
 
-      const scaleFactor = (5 - pz) / 5;
+      const scaleFactor = (-5 - pz) / 5;
       
       const projX = px / scaleFactor;
       const projY = py / scaleFactor;
@@ -97,7 +96,7 @@ const ParticlesBackground = ({ count = 4000 }) => {
       const dy = currentMousePos.current.y - projY;
       const distanceSq = dx * dx + dy * dy;
       
-      const repulsionRadius = 2.5;
+      const repulsionRadius = 1.2;
 
       if (distanceSq < repulsionRadius * repulsionRadius) {
         const distance = Math.sqrt(distanceSq);

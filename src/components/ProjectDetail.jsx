@@ -1,10 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  SiReact, SiFastapi, SiPostgresql, SiMongodb, SiNeo4J, SiRedis, 
+  SiDjango, SiSqlite, SiLeaflet, SiTailwindcss, SiDocker,
+  SiPython, SiGoogle
+} from 'react-icons/si';
+import { FaRobot, FaDatabase, FaCode } from 'react-icons/fa6';
 
 import { projectDetails as projectData, Icon } from '../data/projects';
 import NotFound from '../pages/NotFound';
 import SEO from './SEO';
+
+const getTechIcon = (tech) => {
+  const t = tech.toLowerCase();
+  if (t.includes('react')) return <SiReact className="text-[#61DAFB] text-lg" />;
+  if (t.includes('fastapi')) return <SiFastapi className="text-[#009688] text-lg" />;
+  if (t.includes('postgres')) return <SiPostgresql className="text-[#336791] text-lg" />;
+  if (t.includes('mongo')) return <SiMongodb className="text-[#47A248] text-lg" />;
+  if (t.includes('neo4j')) return <SiNeo4J className="text-[#018bff] text-lg" />;
+  if (t.includes('redis')) return <SiRedis className="text-[#DC382D] text-lg" />;
+  if (t.includes('django')) return <SiDjango className="text-[#092E20] text-lg" />;
+  if (t.includes('sqlite')) return <SiSqlite className="text-[#003B57] text-lg" />;
+  if (t.includes('leaflet')) return <SiLeaflet className="text-[#199900] text-lg" />;
+  if (t.includes('tailwind')) return <SiTailwindcss className="text-[#06B6D4] text-lg" />;
+  if (t.includes('docker')) return <SiDocker className="text-[#2496ED] text-lg" />;
+  if (t.includes('gemini')) return <SiGoogle className="text-[#4285F4] text-lg" />;
+  if (t.includes('llama') || t.includes('rag') || t.includes('langgraph')) return <FaRobot className="text-[#A855F7] text-lg" />;
+  if (t.includes('chroma') || t.includes('bm25')) return <FaDatabase className="text-[#F59E0B] text-lg" />;
+  if (t.includes('sqlalchemy') || t.includes('python')) return <SiPython className="text-[#3776AB] text-lg" />;
+  return <FaCode className="text-white/50 text-lg" />;
+};
 
 const ImageCarousel = ({ images, title, accent = '#00E5FF' }) => {
   const [index, setIndex] = useState(0);
@@ -201,12 +227,15 @@ const ProjectDescription = ({ description, accent }) => (
       <h3 className="text-sm font-bold tracking-[0.2em] uppercase text-white/40 mb-5">Technology Stack</h3>
       <div className="flex flex-wrap gap-3">
         {description.stack.map((tech) => (
-          <span
+          <div
             key={tech}
-            className="px-4 py-2 rounded-lg text-xs font-bold tracking-wider text-white/70 border border-white/10 bg-white/5"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-white/10 bg-[#1D2024]/60 hover:bg-[#1D2024] hover:border-white/20 transition-all duration-300"
           >
-            {tech}
-          </span>
+            {getTechIcon(tech)}
+            <span className="text-xs font-bold tracking-wider text-white/80">
+              {tech}
+            </span>
+          </div>
         ))}
       </div>
     </div>

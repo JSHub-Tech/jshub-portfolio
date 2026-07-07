@@ -2,47 +2,12 @@ import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SEO from '../components/SEO';
-
-// Mock data for projects — you can replace the screenshot URLs here later.
-const projectData = {
-  1: {
-    title: 'Nexus Analytics',
-    category: 'Web Application',
-    screenshots: [
-      'https://via.placeholder.com/1920x1080/0A66C2/ffffff?text=Nexus+Screenshot+1',
-      'https://via.placeholder.com/1920x1080/111827/ffffff?text=Nexus+Screenshot+2',
-      'https://via.placeholder.com/1920x1080/0f1114/ffffff?text=Nexus+Screenshot+3'
-    ]
-  },
-  2: {
-    title: 'FinTech Wallet',
-    category: 'Mobile App',
-    screenshots: [
-      'https://via.placeholder.com/1080x1920/D32F2F/ffffff?text=Wallet+App+Screen+1',
-      'https://via.placeholder.com/1080x1920/1f2937/ffffff?text=Wallet+App+Screen+2'
-    ]
-  },
-  3: {
-    title: 'Aura E-Commerce',
-    category: 'E-Commerce',
-    screenshots: [
-      'https://via.placeholder.com/1920x1080/D9A01B/ffffff?text=Aura+Screenshot+1',
-      'https://via.placeholder.com/1920x1080/111827/ffffff?text=Aura+Screenshot+2'
-    ]
-  },
-  4: {
-    title: 'Vanguard Corporate',
-    category: 'Web Design',
-    screenshots: [
-      'https://via.placeholder.com/1920x1080/00A896/ffffff?text=Vanguard+Screenshot+1',
-      'https://via.placeholder.com/1920x1080/111827/ffffff?text=Vanguard+Screenshot+2'
-    ]
-  }
-};
+import { projectDetails } from '../data/projects';
+import ArchitectureDiagram from '../components/ArchitectureDiagram';
 
 const ProjectDetail = () => {
   const { id } = useParams();
-  const project = projectData[id];
+  const project = projectDetails[id];
 
   // Scroll to top on mount
   useEffect(() => {
@@ -97,7 +62,7 @@ const ProjectDetail = () => {
 
       {/* Screenshots Container */}
       <main className="pt-24 pb-20 w-full max-w-[1920px] mx-auto flex flex-col items-center gap-8 px-4 sm:px-8">
-        {project.screenshots.map((src, index) => (
+        {project.screenshots && project.screenshots.map((src, index) => (
           <motion.img 
             key={index}
             initial={{ opacity: 0, y: 50 }}
@@ -106,15 +71,27 @@ const ProjectDetail = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             src={src} 
             alt={`${project.title} screenshot ${index + 1}`} 
-            className="w-full h-auto rounded-xl shadow-2xl border border-white/5"
+            className="w-full h-auto rounded-[2rem] shadow-2xl border border-white/5"
             style={{ maxWidth: project.category === 'Mobile App' ? '400px' : '1200px' }}
           />
         ))}
 
+        {project.description?.architecture && project.description.architecture.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="w-full max-w-[1200px] mt-10 mb-10"
+          >
+            <ArchitectureDiagram architecture={project.description.architecture} projectName={project.title} />
+          </motion.div>
+        )}
+
         <div className="mt-16">
           <Link 
             to="/#portfolio" 
-            className="px-8 py-4 bg-white/5 hover:bg-white/10 rounded-xl text-white font-bold tracking-widest text-sm transition-colors border border-white/10"
+            className="px-8 py-4 bg-white/5 hover:bg-white/10 rounded-[2rem] text-white font-bold tracking-widest text-sm transition-colors border border-white/10 hover:border-[#00E5FF]/50"
           >
             ← Back to Portfolio
           </Link>
