@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
-const ServiceCard = ({ title, description, linkText, color, icon, index }) => {
+const ServiceCard = ({ title, description, color, icon, index }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -33,7 +33,7 @@ const ServiceCard = ({ title, description, linkText, color, icon, index }) => {
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, margin: "-100px" }}
-        transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+        transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
         style={{
             rotateX,
             rotateY,
@@ -42,7 +42,7 @@ const ServiceCard = ({ title, description, linkText, color, icon, index }) => {
         }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="group relative flex flex-col justify-between p-8 rounded-3xl bg-[#1D2024]/80 backdrop-blur-md border border-white/5 overflow-hidden transition-all duration-500 cursor-pointer h-full min-h-[320px]"
+        className="group relative flex flex-col p-8 rounded-3xl bg-[#1D2024]/80 backdrop-blur-md border border-white/5 overflow-hidden transition-all duration-500 cursor-default h-full min-h-[280px]"
     >
         {/* Glow underneath the card based on its accent color */}
         <div 
@@ -71,21 +71,9 @@ const ServiceCard = ({ title, description, linkText, color, icon, index }) => {
                 </div>
                 
                 <h3 className="text-2xl font-bold text-white mb-3 tracking-wide">{title}</h3>
-                <p className="text-white/50 text-sm leading-relaxed max-w-[95%] mb-8">
+                <p className="text-white/50 text-sm leading-relaxed max-w-[95%]">
                     {description}
                 </p>
-            </div>
-
-            <div className="z-10 mt-auto">
-                <span 
-                    className="text-sm font-semibold tracking-wider transition-all duration-300 flex items-center gap-2 group-hover:gap-3"
-                    style={{ color: color }}
-                >
-                    {linkText}
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                    </svg>
-                </span>
             </div>
         </div>
     </motion.div>
@@ -95,10 +83,29 @@ const ServiceCard = ({ title, description, linkText, color, icon, index }) => {
 const Services = () => {
   const services = [
     {
-      title: 'Web Design',
-      description: 'We craft clean, modern interfaces and intuitive user experiences that bring your brand to life online.',
-      linkText: 'View Work',
+      title: 'Web Development',
+      description: 'We build stunning, high-performance websites and scalable full-stack web applications tailored to your business needs.',
       color: '#00E5FF', // Cyan
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+        </svg>
+      )
+    },
+    {
+      title: 'Mobile Apps',
+      description: 'We engineer seamless, intuitive, and powerful mobile applications for both iOS and Android platforms.',
+      color: '#D32F2F', // Red
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+        </svg>
+      )
+    },
+    {
+      title: 'UI/UX Design',
+      description: 'We design premium, user-centric interfaces and brand identities that leave a lasting impression.',
+      color: '#D9A01B', // Yellow
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
@@ -106,9 +113,28 @@ const Services = () => {
       )
     },
     {
+      title: 'Video Editing',
+      description: 'High-end post-production, motion graphics, and cinematic video editing to elevate your brand storytelling.',
+      color: '#00A896', // Teal
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+        </svg>
+      ) 
+    },
+    {
+      title: 'Logo Design',
+      description: 'We craft iconic, timeless logos that capture the core essence and personality of your business.',
+      color: '#00A3C1', // Blue
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.879-3.879a3 3 0 10-4.242-4.242l-4.648 4.764a15.996 15.996 0 00-3.395 1.622m3.395-1.622a15.996 15.996 0 00-1.622 3.395m-3.42-3.42a15.995 15.995 0 00-4.764 4.648l-3.879 3.879a3 3 0 104.242 4.242l4.648-4.764c1.46-1.503 2.656-3.181 3.52-5.006" />
+        </svg>
+      )
+    },
+    {
       title: 'Branding',
-      description: 'We build memorable, cohesive brand identities — from logos to voice — that resonate with your audience.',
-      linkText: 'View Work',
+      description: 'We build memorable, cohesive brand identities — from voice to visual language — that resonate with your audience.',
       color: '#D32F2F', // Red
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -118,8 +144,7 @@ const Services = () => {
     },
     {
       title: 'Marketing',
-      description: 'We run data-driven marketing campaigns that boost visibility, engagement, and measurable growth.',
-      linkText: 'View Work',
+      description: 'We run data-driven marketing campaigns that boost visibility, engagement, and measurable business growth.',
       color: '#D9A01B', // Yellow
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -128,13 +153,12 @@ const Services = () => {
       ) 
     },
     {
-      title: 'Development',
-      description: 'We engineer robust, scalable web and mobile platforms built to perform in a connected world.',
-      linkText: 'View Work',
-      color: '#00A896', // Teal
+      title: 'Custom Software',
+      description: 'We engineer robust, bespoke enterprise systems and web platforms built to scale and perform.',
+      color: '#00E5FF', // Cyan
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25z" />
         </svg>
       )
     }
@@ -158,6 +182,18 @@ const Services = () => {
             <ServiceCard key={index} {...service} index={index} />
           ))}
         </div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-20 text-center"
+        >
+          <a href="#footer" className="inline-block text-white/50 hover:text-white text-lg tracking-wide transition-colors duration-300">
+            To check out our work you can visit our social media pages <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </a>
+        </motion.div>
       </div>
     </section>
   );
