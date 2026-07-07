@@ -5,7 +5,6 @@ const Hero = () => {
   return (
     <section id="home" className="relative min-h-screen flex flex-col lg:flex-row items-center justify-between px-6 sm:px-8 pb-16 sm:pb-20 lg:pb-24 lg:px-24 overflow-hidden">
 
-
       {/* Left Side: Hero Text */}
       <div className="relative z-10 w-full lg:w-1/2 flex flex-col justify-center pt-28 sm:pt-32 text-center lg:text-left items-center lg:items-start">
         <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold mb-6 leading-tight tracking-tight">
