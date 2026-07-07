@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const testimonials = [
   {
     name: 'Ahmed Al-Rashid',
-    role: 'Founder, Tech Startup',
+    role: 'Saudi Arabia',
     text: 'JSHub Agency completely transformed our digital presence. The attention to detail and the quality of their work is unmatched. Our conversions went up 340% after launch.',
     rating: 5,
     color: '#00E5FF',
@@ -12,7 +12,7 @@ const testimonials = [
   },
   {
     name: 'Sarah Mitchell',
-    role: 'Marketing Director, Retail Brand',
+    role: 'Columbia',
     text: 'Working with JSHub was an absolute pleasure. They delivered a stunning e-commerce platform on time and exceeded every expectation we had. Highly recommended.',
     rating: 5,
     color: '#D32F2F',
@@ -20,7 +20,7 @@ const testimonials = [
   },
   {
     name: 'Omar Farooq',
-    role: 'Project Lead, Digital Platform',
+    role: 'Pakistan',
     text: 'The team at JSHub understood our vision immediately and built something truly exceptional. Clean code, beautiful design, and rock-solid performance.',
     rating: 5,
     color: '#D9A01B',
