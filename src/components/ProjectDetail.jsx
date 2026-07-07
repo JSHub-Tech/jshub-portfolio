@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import { projectDetails as projectData, Icon } from '../data/projects';
 import NotFound from '../pages/NotFound';
+import SEO from './SEO';
 
 const ImageCarousel = ({ images, title, accent = '#00E5FF' }) => {
   const [index, setIndex] = useState(0);
@@ -223,11 +224,6 @@ const ProjectDetail = () => {
     return <NotFound />;
   }
 
-  // Set document title
-  useEffect(() => {
-    document.title = `${project.title} | JSHub`;
-  }, [project.title]);
-
   // Scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -269,6 +265,16 @@ const ProjectDetail = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen bg-transparent text-white"
     >
+      <SEO
+        title={`${project.title} | JSHub Agency Projects`}
+        description={
+          project.description?.tagline ||
+          `${project.title} — a ${project.category} project by JSHub Agency.`
+        }
+        path={`/project/${id}`}
+        image={project.screenshots?.[0]}
+      />
+
       {/* Full-width image carousel */}
       <main className="pt-[130px]">
         {/* Secondary Sub-Navbar that hides behind the main header on scroll down, and shows on scroll up */}

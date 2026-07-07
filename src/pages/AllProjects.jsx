@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 
+import SEO from '../components/SEO';
 import { projectsList as allProjects } from '../data/projects';
 
 const AllProjects = () => {
@@ -10,7 +11,6 @@ const AllProjects = () => {
   const lastScrollY = React.useRef(0);
 
   useEffect(() => {
-    document.title = 'All Projects | JSHub';
     window.scrollTo(0, 0);
     
     const handleScroll = () => {
@@ -35,6 +35,12 @@ const AllProjects = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen pt-[130px] pb-24"
     >
+      <SEO
+        title="All Projects | JSHub Agency"
+        description="Browse JSHub Agency's full portfolio of web applications, mobile apps, and UI/UX design projects."
+        path="/projects"
+      />
+
       {/* Secondary Sub-Navbar that hides behind the main header on scroll down */}
       <div 
         className={`fixed top-[72px] left-0 w-full z-40 bg-[#12151a]/30 backdrop-blur-md border-b border-white/5 px-6 sm:px-12 py-3.5 flex items-center justify-between transition-transform duration-500 ease-in-out ${

@@ -13,6 +13,20 @@ function App() {
 
   return (
     <Layout>
+      {/*
+        Site-wide fallback meta tags. React 19 hoists <title>/<meta>/<link>
+        rendered anywhere in the tree to <head> automatically, and de-dupes
+        by tag identity — so a page rendering its own <SEO /> (see
+        src/components/SEO.jsx) further down the tree will take over from
+        this fallback once it mounts.
+      */}
+      <title>JSHub Agency | Premium Web & Mobile Development</title>
+      <meta
+        name="description"
+        content="JSHub is a premium digital agency engineering scalable web applications, mobile apps, video editing, and UI/UX design to accelerate your business growth."
+      />
+      <link rel="canonical" href="https://jshub.agency/" />
+
       <AnimatePresence>
         {isLoading && <Loader onLoadingComplete={() => setIsLoading(false)} />}
       </AnimatePresence>
