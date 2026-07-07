@@ -8,6 +8,9 @@
   </url>
   <url>
     <loc>https://www.jshub.live/projects</loc>
+    <loc>https://www.jshub.live/project/1</loc>
+    <loc>https://www.jshub.live/project/2</loc>
+    <loc>https://www.jshub.live/project/3</loc>
     <lastmod>2026-07-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
