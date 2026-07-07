@@ -46,16 +46,22 @@ const ValueCard = ({ item, index }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: false, margin: '-60px' }}
     transition={{ duration: 0.5, delay: index * 0.1 }}
-    className="p-7 rounded-2xl bg-[#1D2024]/60 border border-white/5 hover:border-white/15 transition-colors duration-300"
+    className="relative group p-7 rounded-2xl bg-[#1D2024]/60 border border-white/5 hover:border-white/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden"
   >
+    {/* Bottom glow on hover */}
     <div
-      className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
+      className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-8 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+      style={{ backgroundColor: item.color }}
+    />
+
+    <div
+      className="relative z-10 w-12 h-12 rounded-xl flex items-center justify-center mb-5"
       style={{ backgroundColor: `${item.color}18`, color: item.color }}
     >
       {item.icon}
     </div>
-    <h4 className="text-white font-bold text-lg mb-2 tracking-wide">{item.title}</h4>
-    <p className="text-white/50 text-sm leading-relaxed">{item.description}</p>
+    <h4 className="relative z-10 text-white font-bold text-lg mb-2 tracking-wide">{item.title}</h4>
+    <p className="relative z-10 text-white/50 text-sm leading-relaxed">{item.description}</p>
   </motion.div>
 );
 
