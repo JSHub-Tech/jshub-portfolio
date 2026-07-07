@@ -1,9 +1,11 @@
 import React from 'react';
 
 const items = [
-  'Web Design', '✦', 'Branding', '✦', 'Development', '✦', 'Marketing', '✦',
-  'UI/UX Design', '✦', 'SEO', '✦', 'React', '✦', 'Next.js', '✦',
-  'Mobile Apps', '✦', 'E-Commerce', '✦', 'Figma', '✦', 'Node.js', '✦',
+  'Account Management', '✦', 'FastAPI', '✦', 'Django', '✦', 'Django REST', '✦', 
+  'HTML', '✦', 'CSS', '✦', 'JS', '✦', 'C++', '✦', 
+  'C#', '✦', 'Python', '✦', 'Flask', '✦', 'React', '✦', 
+  'Vite', '✦', 'Tailwind CSS', '✦', 'WinForms', '✦', '.NET', '✦', 
+  'ASP.NET', '✦', 'SFML', '✦', 'Video Editing', '✦',
 ];
 
 const Marquee = ({ reverse = false }) => (

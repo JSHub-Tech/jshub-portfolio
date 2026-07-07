@@ -23,9 +23,9 @@ const AnimatedCounter = ({ target, suffix = '' }) => {
 // ── Stats Section ─────────────────────────────────────────────────────────────
 const Stats = () => {
   const stats = [
-    { value: 50,  suffix: '+',  label: 'Projects Delivered',   color: '#00E5FF' },
-    { value: 30,  suffix: '+',  label: 'Happy Clients',         color: '#D32F2F' },
-    { value: 5,   suffix: '',    label: 'Years of Excellence',   color: '#D9A01B' },
+    { value: 25,  suffix: '+',  label: 'Projects Delivered',   color: '#00E5FF' },
+    { value: 10,  suffix: '+',  label: 'Happy Clients',         color: '#D32F2F' },
+    { value: 5,   suffix: '',    label: 'Core Experts',   color: '#D9A01B' },
     { value: 100, suffix: '%',  label: 'Client Satisfaction',   color: '#00A896' },
   ];
 
