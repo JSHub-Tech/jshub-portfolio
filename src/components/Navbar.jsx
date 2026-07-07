@@ -9,7 +9,7 @@ const Navbar = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      const sections = ['home', 'services', 'portfolio', 'team', 'contact'];
+      const sections = ['home', 'services', 'portfolio', 'about', 'contact'];
       const scrollPosition = window.scrollY + 200;
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -27,8 +27,8 @@ const Navbar = () => {
     { id: 'home',      label: 'Home',      accent: '#00A3C1' },
     { id: 'services',  label: 'Services',  accent: '#D32F2F' },
     { id: 'portfolio', label: 'Portfolio', accent: '#D9A01B' },
-    { id: 'team',      label: 'About',     accent: '#00A896' },
-    { id: 'contact',   label: 'Contact',   accent: '#00A3C1' },
+    { id: 'about',     label: 'About',     accent: '#00A896' },
+    { id: 'contact',   label: 'Contact',   accent: '#D32F2F' },
   ];
 
   return (
