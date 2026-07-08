@@ -10,7 +10,6 @@ import ProcessTimeline from '../components/ProcessTimeline';
 import FeaturedProjects from '../components/FeaturedProjects';
 import Testimonials from '../components/Testimonials';
 import About from '../components/About';
-import Team from '../components/Team';
 import ContactCTA from '../components/ContactCTA';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
@@ -44,7 +43,6 @@ export default function Home() {
       <FeaturedProjects />
       <Testimonials />
       <About />
-      <Team />
       <ContactCTA />
       <ContactSection />
       <Footer />
