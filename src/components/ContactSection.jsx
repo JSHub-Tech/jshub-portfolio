@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaWhatsapp } from 'react-icons/fa6';
 
-const JSHUB_EMAIL = 'jshubdigital@gmail.com';
+const JSHUB_EMAIL = 'contact@jshub.live';
 const WHATSAPP_LINK = 'https://wa.me/message/ILQZLGESBKONH1';
 
 const ContactForm = () => {
